@@ -23,10 +23,30 @@ class _CouponItem {
 }
 
 const _dummyCoupons = [
-  _CouponItem(code: 'WELCOME50', discount: '50%', expiryDate: '2026-04-01', isActive: true),
-  _CouponItem(code: 'RIDE20', discount: '20%', expiryDate: '2026-03-15', isActive: true),
-  _CouponItem(code: 'LAFFA10', discount: '10 EGP', expiryDate: '2026-05-01', isActive: true),
-  _CouponItem(code: 'SUMMER30', discount: '30%', expiryDate: '2026-01-15', isActive: false),
+  _CouponItem(
+    code: 'WELCOME50',
+    discount: '50%',
+    expiryDate: '2026-04-01',
+    isActive: true,
+  ),
+  _CouponItem(
+    code: 'RIDE20',
+    discount: '20%',
+    expiryDate: '2026-03-15',
+    isActive: true,
+  ),
+  _CouponItem(
+    code: 'LAFFA10',
+    discount: '10 EGP',
+    expiryDate: '2026-05-01',
+    isActive: true,
+  ),
+  _CouponItem(
+    code: 'SUMMER30',
+    discount: '30%',
+    expiryDate: '2026-01-15',
+    isActive: false,
+  ),
 ];
 
 class CouponsScreen extends ConsumerWidget {
@@ -64,26 +84,40 @@ class CouponsScreen extends ConsumerWidget {
             const SizedBox(height: 24),
             if (activeCoupons.isNotEmpty) ...[
               Text(
-                isArabic ? AppStringsAr.activeCoupons : AppStringsEn.activeCoupons,
-                style: AppFonts.label(isArabic: isArabic, color: AppColors.textSecondary),
+                isArabic
+                    ? AppStringsAr.activeCoupons
+                    : AppStringsEn.activeCoupons,
+                style: AppFonts.label(
+                  isArabic: isArabic,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 10),
-              ...activeCoupons.map((c) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: _buildCouponCard(c, isArabic),
-              )),
+              ...activeCoupons.map(
+                (c) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _buildCouponCard(c, isArabic),
+                ),
+              ),
             ],
             if (expiredCoupons.isNotEmpty) ...[
               const SizedBox(height: 12),
               Text(
-                isArabic ? AppStringsAr.expiredCoupons : AppStringsEn.expiredCoupons,
-                style: AppFonts.label(isArabic: isArabic, color: AppColors.textSecondary),
+                isArabic
+                    ? AppStringsAr.expiredCoupons
+                    : AppStringsEn.expiredCoupons,
+                style: AppFonts.label(
+                  isArabic: isArabic,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 10),
-              ...expiredCoupons.map((c) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: _buildCouponCard(c, isArabic),
-              )),
+              ...expiredCoupons.map(
+                (c) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _buildCouponCard(c, isArabic),
+                ),
+              ),
             ],
           ],
         ),
@@ -98,7 +132,13 @@ class CouponsScreen extends ConsumerWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.borderLight),
-        boxShadow: [BoxShadow(color: AppColors.shadow, blurRadius: 6, offset: const Offset(0, 2))],
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,13 +153,22 @@ class CouponsScreen extends ConsumerWidget {
               Expanded(
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: isArabic ? AppStringsAr.couponCode : AppStringsEn.couponCode,
-                    prefixIcon: const Icon(Icons.local_offer_rounded, color: AppColors.primary, size: 20),
+                    hintText: isArabic
+                        ? AppStringsAr.couponCode
+                        : AppStringsEn.couponCode,
+                    prefixIcon: const Icon(
+                      Icons.local_offer_rounded,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: AppColors.border),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ),
@@ -129,12 +178,20 @@ class CouponsScreen extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
                 ),
                 child: Text(
                   isArabic ? 'تطبيق' : 'Apply',
-                  style: AppFonts.label(isArabic: isArabic, color: AppColors.white),
+                  style: AppFonts.label(
+                    isArabic: isArabic,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ],
@@ -151,10 +208,18 @@ class CouponsScreen extends ConsumerWidget {
         color: coupon.isActive ? AppColors.white : AppColors.greyLight,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: coupon.isActive ? AppColors.primary.withValues(alpha: 0.3) : AppColors.border,
+          color: coupon.isActive
+              ? AppColors.primary.withValues(alpha: 0.3)
+              : AppColors.border,
         ),
         boxShadow: coupon.isActive
-            ? [BoxShadow(color: AppColors.shadow, blurRadius: 6, offset: const Offset(0, 2))]
+            ? [
+                BoxShadow(
+                  color: AppColors.shadow,
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ]
             : [],
       ),
       child: Row(
@@ -175,7 +240,9 @@ class CouponsScreen extends ConsumerWidget {
                   isArabic: isArabic,
                   fontSize: AppFonts.sizeMedium,
                   fontWeight: AppFonts.bold,
-                  color: coupon.isActive ? AppColors.primary : AppColors.textTertiary,
+                  color: coupon.isActive
+                      ? AppColors.primary
+                      : AppColors.textTertiary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -190,13 +257,20 @@ class CouponsScreen extends ConsumerWidget {
                   coupon.code,
                   style: AppFonts.label(
                     isArabic: isArabic,
-                    color: coupon.isActive ? AppColors.text : AppColors.textTertiary,
+                    color: coupon.isActive
+                        ? AppColors.text
+                        : AppColors.textTertiary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  isArabic ? 'ينتهي: ${coupon.expiryDate}' : 'Expires: ${coupon.expiryDate}',
-                  style: AppFonts.caption(isArabic: isArabic, color: AppColors.textTertiary),
+                  isArabic
+                      ? 'ينتهي: ${coupon.expiryDate}'
+                      : 'Expires: ${coupon.expiryDate}',
+                  style: AppFonts.caption(
+                    isArabic: isArabic,
+                    color: AppColors.textTertiary,
+                  ),
                 ),
               ],
             ),
@@ -204,7 +278,9 @@ class CouponsScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: coupon.isActive ? AppColors.successLight : AppColors.greyLight,
+              color: coupon.isActive
+                  ? AppColors.successLight
+                  : AppColors.greyLight,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -213,7 +289,9 @@ class CouponsScreen extends ConsumerWidget {
                   : (isArabic ? 'منتهي' : 'Expired'),
               style: AppFonts.caption(
                 isArabic: isArabic,
-                color: coupon.isActive ? AppColors.success : AppColors.textTertiary,
+                color: coupon.isActive
+                    ? AppColors.success
+                    : AppColors.textTertiary,
               ),
             ),
           ),

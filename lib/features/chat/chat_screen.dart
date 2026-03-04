@@ -21,20 +21,31 @@ class _ChatMessage {
 }
 
 const _initialMessages = [
-  _ChatMessage(text: 'Hello! How can I help you today?', isUser: false, time: '10:00 AM'),
-  _ChatMessage(text: 'I have a question about my last ride.', isUser: true, time: '10:01 AM'),
   _ChatMessage(
-    text: 'Sure! I\'d be happy to help. Could you please share the trip details or any issue you faced?',
+    text: 'Hello! How can I help you today?',
+    isUser: false,
+    time: '10:00 AM',
+  ),
+  _ChatMessage(
+    text: 'I have a question about my last ride.',
+    isUser: true,
+    time: '10:01 AM',
+  ),
+  _ChatMessage(
+    text:
+        'Sure! I\'d be happy to help. Could you please share the trip details or any issue you faced?',
     isUser: false,
     time: '10:01 AM',
   ),
   _ChatMessage(
-    text: 'The trip duration seems incorrect. It showed 45 minutes but I only rode for 20 minutes.',
+    text:
+        'The trip duration seems incorrect. It showed 45 minutes but I only rode for 20 minutes.',
     isUser: true,
     time: '10:02 AM',
   ),
   _ChatMessage(
-    text: 'I understand your concern. Let me check your trip history. Could you provide the trip date?',
+    text:
+        'I understand your concern. Let me check your trip history. Could you provide the trip date?',
     isUser: false,
     time: '10:03 AM',
   ),
@@ -62,22 +73,27 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (text.isEmpty) return;
 
     setState(() {
-      _messages.add(_ChatMessage(
-        text: text,
-        isUser: true,
-        time: TimeOfDay.now().format(context),
-      ));
+      _messages.add(
+        _ChatMessage(
+          text: text,
+          isUser: true,
+          time: TimeOfDay.now().format(context),
+        ),
+      );
       _messageController.clear();
     });
 
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         setState(() {
-          _messages.add(_ChatMessage(
-            text: 'Thank you for your message. Our team will review this and get back to you shortly.',
-            isUser: false,
-            time: TimeOfDay.now().format(context),
-          ));
+          _messages.add(
+            _ChatMessage(
+              text:
+                  'Thank you for your message. Our team will review this and get back to you shortly.',
+              isUser: false,
+              time: TimeOfDay.now().format(context),
+            ),
+          );
         });
       }
     });
@@ -107,19 +123,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 color: AppColors.secondary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.support_agent_rounded, color: AppColors.white, size: 18),
+              child: const Icon(
+                Icons.support_agent_rounded,
+                color: AppColors.white,
+                size: 18,
+              ),
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isArabic ? AppStringsAr.supportAgent : AppStringsEn.supportAgent,
-                  style: AppFonts.label(isArabic: isArabic, color: AppColors.white),
+                  isArabic
+                      ? AppStringsAr.supportAgent
+                      : AppStringsEn.supportAgent,
+                  style: AppFonts.label(
+                    isArabic: isArabic,
+                    color: AppColors.white,
+                  ),
                 ),
                 Text(
                   isArabic ? 'متصل' : 'Online',
-                  style: AppFonts.caption(isArabic: isArabic, color: AppColors.secondaryLight),
+                  style: AppFonts.caption(
+                    isArabic: isArabic,
+                    color: AppColors.secondaryLight,
+                  ),
                 ),
               ],
             ),
@@ -143,7 +171,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             decoration: BoxDecoration(
               color: AppColors.white,
               boxShadow: [
-                BoxShadow(color: AppColors.shadow, blurRadius: 8, offset: const Offset(0, -2)),
+                BoxShadow(
+                  color: AppColors.shadow,
+                  blurRadius: 8,
+                  offset: const Offset(0, -2),
+                ),
               ],
             ),
             child: SafeArea(
@@ -154,12 +186,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     child: TextField(
                       controller: _messageController,
                       decoration: InputDecoration(
-                        hintText: isArabic ? AppStringsAr.typeMessage : AppStringsEn.typeMessage,
+                        hintText: isArabic
+                            ? AppStringsAr.typeMessage
+                            : AppStringsEn.typeMessage,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: const BorderSide(color: AppColors.border),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
                         filled: true,
                         fillColor: AppColors.background,
                       ),
@@ -170,9 +207,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   Container(
                     width: 44,
                     height: 44,
-                    decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
                     child: IconButton(
-                      icon: const Icon(Icons.send_rounded, color: AppColors.white, size: 20),
+                      icon: const Icon(
+                        Icons.send_rounded,
+                        color: AppColors.white,
+                        size: 20,
+                      ),
                       onPressed: _sendMessage,
                     ),
                   ),
@@ -189,15 +233,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
-        mainAxisAlignment: message.isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: message.isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!message.isUser) ...[
             Container(
               width: 28,
               height: 28,
-              decoration: const BoxDecoration(color: AppColors.secondary, shape: BoxShape.circle),
-              child: const Icon(Icons.support_agent_rounded, color: AppColors.white, size: 14),
+              decoration: const BoxDecoration(
+                color: AppColors.secondary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.support_agent_rounded,
+                color: AppColors.white,
+                size: 14,
+              ),
             ),
             const SizedBox(width: 8),
           ],
@@ -213,7 +266,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   bottomRight: Radius.circular(message.isUser ? 4 : 16),
                 ),
                 boxShadow: [
-                  BoxShadow(color: AppColors.shadow, blurRadius: 4, offset: const Offset(0, 1)),
+                  BoxShadow(
+                    color: AppColors.shadow,
+                    blurRadius: 4,
+                    offset: const Offset(0, 1),
+                  ),
                 ],
               ),
               child: Column(
@@ -231,7 +288,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     message.time,
                     style: AppFonts.caption(
                       isArabic: isArabic,
-                      color: message.isUser ? AppColors.secondaryLight : AppColors.textTertiary,
+                      color: message.isUser
+                          ? AppColors.secondaryLight
+                          : AppColors.textTertiary,
                     ),
                   ),
                 ],

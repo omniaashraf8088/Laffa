@@ -50,10 +50,7 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 10),
             _buildThemeSelector(ref, localization, isArabic),
             const SizedBox(height: 24),
-            _buildSectionTitle(
-              isArabic ? 'عام' : 'General',
-              isArabic,
-            ),
+            _buildSectionTitle(isArabic ? 'عام' : 'General', isArabic),
             const SizedBox(height: 10),
             _buildSettingsCard(
               children: [
@@ -81,9 +78,7 @@ class SettingsScreen extends ConsumerWidget {
                 _buildDivider(),
                 _buildSettingsTile(
                   icon: Icons.info_outline_rounded,
-                  label: isArabic
-                      ? AppStringsAr.aboutUs
-                      : AppStringsEn.aboutUs,
+                  label: isArabic ? AppStringsAr.aboutUs : AppStringsEn.aboutUs,
                   isArabic: isArabic,
                   onTap: () {},
                 ),
