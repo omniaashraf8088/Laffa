@@ -1,89 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
+
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
-import 'station_marker.dart';
+import '../../core/theme/app_theme.dart';
 import 'station_model.dart';
 import 'home_provider.dart';
 
+/// Map widget using flutter_map with free OpenStreetMap tiles.
+/// No API key required - completely free.
 class MapViewWidget extends ConsumerStatefulWidget {
   final Function(Station) onStationTapped;
 
-  const MapViewWidget({Key? key, required this.onStationTapped})
-    : super(key: key);
+  const MapViewWidget({super.key, required this.onStationTapped});
 
   @override
   ConsumerState<MapViewWidget> createState() => _MapViewWidgetState();
 }
 
 class _MapViewWidgetState extends ConsumerState<MapViewWidget> {
-  GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
-  bool _markersLoaded = false;
+  final MapController _mapController = MapController();
   bool _mapReady = false;
-  String _lastStationSignature = '';
 
-  @override
-  void didUpdateWidget(MapViewWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _loadMarkers();
+  void _animateToUserLocation(UserLocation location) {
+    _mapController.move(LatLng(location.latitude, location.longitude), 15.5);
   }
 
-  Future<void> _loadMarkers() async {
-    if (_markersLoaded || _mapController == null) return;
-
-    try {
-      final homeState = ref.read(homeProvider);
-      final signature = homeState.filteredStations
-          .map((station) => station.id)
-          .join('|');
-
-      if (signature == _lastStationSignature && _markers.isNotEmpty) {
-        _markersLoaded = true;
-        return;
-      }
-
-      final newMarkers = <Marker>{};
-
-      for (final station in homeState.filteredStations) {
-        final markerIcon = await StationMarkerGenerator.generateStationMarker(
-          station,
-        );
-
-        final marker = StationMarkerGenerator.createStationMarker(
-          station: station,
-          markerIcon: markerIcon,
+  /// Builds flutter_map markers from station data.
+  List<Marker> _buildMarkers(List<Station> stations) {
+    return stations.map((station) {
+      return Marker(
+        point: LatLng(station.latitude, station.longitude),
+        width: 70,
+        height: 80,
+        child: GestureDetector(
           onTap: () => widget.onStationTapped(station),
-        );
-
-        newMarkers.add(marker);
-      }
-
-      if (mounted) {
-        setState(() {
-          _markers = newMarkers;
-          _markersLoaded = true;
-          _lastStationSignature = signature;
-        });
-      }
-    } catch (e) {
-      debugPrint('Error loading markers: $e');
-    }
-  }
-
-  Future<void> _animateToUserLocation(UserLocation location) async {
-    if (_mapController == null) return;
-
-    await _mapController!.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(location.latitude, location.longitude),
-          zoom: 15.5,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Main marker circle
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.25),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.electric_scooter_rounded,
+                  color: Colors.white,
+                  size: 22,
+                ),
+              ),
+              const SizedBox(height: 2),
+              // Count badge
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  '${station.availableScooters}',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }).toList();
   }
 
   @override
@@ -92,12 +100,14 @@ class _MapViewWidgetState extends ConsumerState<MapViewWidget> {
     final localization = ref.watch(localizationProvider);
     final isArabic = localization.language == AppLanguage.ar;
     final gettingLocationLabel = isArabic
-      ? AppStringsAr.gettingLocation
-      : AppStringsEn.gettingLocation;
+        ? AppStringsAr.gettingLocation
+        : AppStringsEn.gettingLocation;
     final retryLabel = isArabic ? AppStringsAr.retry : AppStringsEn.retry;
-    final loadingMapLabel =
-      isArabic ? AppStringsAr.loadingMap : AppStringsEn.loadingMap;
+    final loadingMapLabel = isArabic
+        ? AppStringsAr.loadingMap
+        : AppStringsEn.loadingMap;
 
+    // Loading location state
     if (homeState.isLoadingLocation) {
       return Center(
         child: Column(
@@ -123,6 +133,7 @@ class _MapViewWidgetState extends ConsumerState<MapViewWidget> {
       );
     }
 
+    // Error state
     if (homeState.error != null && homeState.currentLocation == null) {
       return Center(
         child: Padding(
@@ -158,138 +169,103 @@ class _MapViewWidgetState extends ConsumerState<MapViewWidget> {
       );
     }
 
+    // Waiting for location
     if (homeState.currentLocation == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // Load markers when stations change
-    if (!_markersLoaded && homeState.stations.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _loadMarkers();
-      });
-    }
-
-    // Update markers when filtered stations change
-    if (_markersLoaded &&
-        _markers.length != homeState.filteredStations.length) {
-      _markersLoaded = false;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _loadMarkers();
-      });
-    }
-
-    final filteredSignature = homeState.filteredStations
-        .map((station) => station.id)
-        .join('|');
-    if (_markersLoaded && filteredSignature != _lastStationSignature) {
-      _markersLoaded = false;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _loadMarkers();
-      });
-    }
+    final markers = _buildMarkers(homeState.filteredStations);
 
     return Stack(
       children: [
-        GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: LatLng(
+        // Flutter Map with free OpenStreetMap tiles
+        FlutterMap(
+          mapController: _mapController,
+          options: MapOptions(
+            initialCenter: LatLng(
               homeState.currentLocation!.latitude,
               homeState.currentLocation!.longitude,
             ),
-            zoom: 15,
+            initialZoom: 15.0,
+            onMapReady: () {
+              if (mounted) {
+                setState(() {
+                  _mapReady = true;
+                });
+                _animateToUserLocation(homeState.currentLocation!);
+              }
+            },
           ),
-          onMapCreated: (controller) {
-            _mapController = controller;
-            _loadMarkers();
-            _animateToUserLocation(homeState.currentLocation!);
-            if (mounted) {
-              setState(() {
-                _mapReady = true;
-              });
-            }
-          },
-          markers: _markers,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          zoomControlsEnabled: false,
-          mapToolbarEnabled: false,
-          liteModeEnabled: false,
-          style: _getMapStyle(),
+          children: [
+            // Free OpenStreetMap tile layer - no API key needed
+            TileLayer(
+              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+              userAgentPackageName: 'com.laffa.app',
+            ),
+            // Station markers
+            MarkerLayer(markers: markers),
+            // User location marker
+            MarkerLayer(
+              markers: [
+                Marker(
+                  point: LatLng(
+                    homeState.currentLocation!.latitude,
+                    homeState.currentLocation!.longitude,
+                  ),
+                  width: 24,
+                  height: 24,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.info,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.info.withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
+        // Loading overlay
         AnimatedOpacity(
           opacity: _mapReady ? 0 : 1,
           duration: const Duration(milliseconds: 400),
-          child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 54,
-                  height: 54,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor,
+          child: IgnorePointer(
+            ignoring: _mapReady,
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 54,
+                    height: 54,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor,
+                      ),
+                      strokeWidth: 3,
                     ),
-                    strokeWidth: 3,
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  loadingMapLabel,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  Text(
+                    loadingMapLabel,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ],
     );
-  }
-
-  String _getMapStyle() {
-    return '''[
-      {
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f5ebdd"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#616161"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#c4a484"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#d4e4f7"
-          }
-        ]
-      }
-    ]''';
-  }
-
-  @override
-  void dispose() {
-    _mapController?.dispose();
-    super.dispose();
   }
 }

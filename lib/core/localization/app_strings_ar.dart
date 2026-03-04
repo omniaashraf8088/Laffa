@@ -1,6 +1,6 @@
 class AppStringsAr {
   // Global
-  static const String appName = 'سمارت ويل';
+  static const String appName = 'Laffa';
   static const String ok = 'حسناً';
   static const String cancel = 'إلغاء';
   static const String save = 'حفظ';
@@ -15,11 +15,11 @@ class AppStringsAr {
   static const String warning = 'تحذير';
 
   // Splash
-  static const String splashTitle = 'سمارت ويل';
+  static const String splashTitle = 'Laffa';
   static const String splashSubtitle = 'حلك الذكي للدراجات الكهربائية';
 
   // Onboarding
-  static const String onboardingTitle1 = 'مرحباً بك في سمارت ويل';
+  static const String onboardingTitle1 = 'مرحباً بك في Laffa';
   static const String onboardingDesc1 =
       'طريقتك الذكية للتنقل في المدينة بسهولة.';
 
@@ -42,7 +42,7 @@ class AppStringsAr {
   static const String loginTitle = 'تسجيل الدخول';
   static const String loginSubtitle = 'أهلاً وسهلاً! سجل دخولك إلى حسابك';
   static const String signupTitle = 'إنشاء حساب';
-  static const String signupSubtitle = 'انضم إلى مجتمع سمارت ويل اليوم';
+  static const String signupSubtitle = 'انضم إلى مجتمع Laffa اليوم';
 
   static const String email = 'البريد الإلكتروني';
   static const String password = 'كلمة المرور';
@@ -89,9 +89,9 @@ class AppStringsAr {
   static const String startRide = 'ابدأ الرحلة';
   static const String endRide = 'أنهِ الرحلة';
   static const String tripHistory = 'سجل الرحلات';
-    static const String searchStations = 'ابحث عن المحطات...';
-    static const String availableScooters = 'الدراجات المتاحة';
-    static const String noHiddenFees = 'بدون رسوم مخفية • اركب بأمان';
+  static const String searchStations = 'ابحث عن المحطات...';
+  static const String availableScooters = 'الدراجات المتاحة';
+  static const String noHiddenFees = 'بدون رسوم مخفية • اركب بأمان';
   static const String savePassword = 'احفظ كلمة المرور';
 
   // Trip Details
@@ -151,4 +151,11 @@ class AppStringsAr {
   static const String gettingLocation = 'جارٍ تحديد موقعك...';
   static const String loadingMap = 'جارٍ تحميل الخريطة...';
   static const String comingSoon = 'قريبا';
+
+  // Trips
+  static const String clearAll = 'مسح الكل';
+  static const String clearAllTrips = 'مسح جميع الرحلات؟';
+  static const String clearAllTripsConfirm = 'سيتم حذف جميع سجل الرحلات. هل أنت متأكد؟';
+  static const String tripDeleted = 'تم حذف الرحلة';
+  static const String undo = 'تراجع';
 }

@@ -1,5 +1,5 @@
 name: laffa
-description: "A new Flutter project."
+description: "Laffa - Smart Scooter Sharing App"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -33,18 +33,18 @@ dependencies:
   
   # UI & Design
   cupertino_icons: ^1.0.8
-  google_fonts: ^7.0.0
   lottie: ^3.1.2
-  
+
   # State Management
   flutter_riverpod: ^2.5.1
   riverpod: ^2.5.1
-  
+
   # Routing
   go_router: ^14.0.0
-  
-  # Location & Maps
-  google_maps_flutter: ^2.8.0
+
+  # Location & Maps (free - OpenStreetMap, no API key needed)
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
   geolocator: ^12.0.0
   
   # Localization
@@ -57,6 +57,9 @@ dependencies:
   # Utilities
   uuid: ^4.2.1
   equatable: ^2.0.5
+  dartz: ^0.10.1
+  get_it: ^8.0.3
+  internet_connection_checker: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -87,5 +90,5 @@ flutter:
     - assets/images/
     - assets/icons/
 
-# Fonts are provided by google_fonts package
-  # No need to add font files manually
+# Using system default fonts (Roboto on Android, SF Pro on iOS)
+  # No external font downloads needed - works offline

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/constants/fonts.dart';
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   Station? _selectedStation;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String _stationHeroTag(Station station) => 'station_${station.id}';
 
@@ -41,7 +43,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           station: station,
           heroTag: _stationHeroTag(station),
           onStartRidePressed: () {
-            ref.read(homeProvider.notifier).startTrip(station);
+            Navigator.of(context).pop(); // Close bottom sheet
+            this.context.push(
+              '/booking?stationId=${station.id}&stationName=${Uri.encodeComponent(station.name)}',
+            );
           },
         );
       },
@@ -59,20 +64,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final homeState = ref.watch(homeProvider);
     final localization = ref.watch(localizationProvider);
     final isArabic = localization.language == AppLanguage.ar;
-    final nearbyLabel =
-        isArabic ? AppStringsAr.nearbyScooters : AppStringsEn.nearbyScooters;
-    final noStationsLabel =
-        isArabic ? AppStringsAr.noScootersFound : AppStringsEn.noScootersFound;
-    final activeTripLabel =
-        isArabic ? AppStringsAr.activeTrip : AppStringsEn.activeTrip;
-    final noActiveTripLabel =
-        isArabic ? AppStringsAr.noActiveTrip : AppStringsEn.noActiveTrip;
-    final tripHistoryLabel =
-        isArabic ? AppStringsAr.tripHistory : AppStringsEn.tripHistory;
+    final nearbyLabel = isArabic
+        ? AppStringsAr.nearbyScooters
+        : AppStringsEn.nearbyScooters;
+    final noStationsLabel = isArabic
+        ? AppStringsAr.noScootersFound
+        : AppStringsEn.noScootersFound;
+    final activeTripLabel = isArabic
+        ? AppStringsAr.activeTrip
+        : AppStringsEn.activeTrip;
+    final noActiveTripLabel = isArabic
+        ? AppStringsAr.noActiveTrip
+        : AppStringsEn.noActiveTrip;
+    final tripHistoryLabel = isArabic
+        ? AppStringsAr.tripHistory
+        : AppStringsEn.tripHistory;
     final couponsLabel = isArabic ? AppStringsAr.coupons : AppStringsEn.coupons;
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.background,
+      // Navigation drawer for Profile, Settings, etc.
+      drawer: _buildDrawer(context, isArabic: isArabic),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = constraints.maxWidth > 720
@@ -82,9 +95,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return Stack(
             children: [
               Positioned.fill(
-                child: MapViewWidget(
-                  onStationTapped: _openStationSheet,
-                ),
+                child: MapViewWidget(onStationTapped: _openStationSheet),
               ),
               SafeArea(
                 child: Align(
@@ -101,7 +112,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const SearchBarWidget(),
+                          // Menu button + Search bar row
+                          Row(
+                            children: [
+                              // Menu button to open drawer
+                              _buildMenuButton(),
+                              const SizedBox(width: 10),
+                              const Expanded(child: SearchBarWidget()),
+                            ],
+                          ),
                           const SizedBox(height: 12),
                           AnimatedSwitcher(
                             duration: const Duration(milliseconds: 300),
@@ -190,6 +209,198 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
+  /// Builds the menu button that opens the navigation drawer.
+  Widget _buildMenuButton() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.border),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () => _scaffoldKey.currentState?.openDrawer(),
+          child: const Padding(
+            padding: EdgeInsets.all(12),
+            child: Icon(Icons.menu_rounded, color: AppColors.primary, size: 22),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Navigation drawer with links to all screens.
+  Widget _buildDrawer(BuildContext context, {required bool isArabic}) {
+    return Drawer(
+      backgroundColor: AppColors.background,
+      child: SafeArea(
+        child: Column(
+          children: [
+            // Drawer header
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(24),
+              decoration: const BoxDecoration(color: AppColors.primary),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Avatar
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: AppColors.secondary,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: const Icon(
+                      Icons.person_rounded,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    isArabic ? 'مرحبا بك' : 'Welcome',
+                    style: AppFonts.style(
+                      isArabic: isArabic,
+                      fontSize: AppFonts.sizeXLarge,
+                      fontWeight: AppFonts.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Laffa',
+                    style: AppFonts.style(
+                      isArabic: isArabic,
+                      fontSize: AppFonts.sizeSmall,
+                      fontWeight: AppFonts.medium,
+                      color: AppColors.secondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Menu items
+            _buildDrawerItem(
+              icon: Icons.home_rounded,
+              label: isArabic ? 'الرئيسية' : 'Home',
+              isArabic: isArabic,
+              onTap: () => Navigator.of(context).pop(),
+            ),
+            _buildDrawerItem(
+              icon: Icons.person_rounded,
+              label: isArabic ? 'الملف الشخصي' : 'Profile',
+              isArabic: isArabic,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/profile');
+              },
+            ),
+            _buildDrawerItem(
+              icon: Icons.history_rounded,
+              label: isArabic ? 'سجل الرحلات' : 'Trip History',
+              isArabic: isArabic,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/trips');
+              },
+            ),
+            _buildDrawerItem(
+              icon: Icons.local_offer_rounded,
+              label: isArabic ? 'الكوبونات' : 'Coupons',
+              isArabic: isArabic,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/coupons');
+              },
+            ),
+            _buildDrawerItem(
+              icon: Icons.chat_rounded,
+              label: isArabic ? 'الدعم' : 'Support',
+              isArabic: isArabic,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/chat');
+              },
+            ),
+            _buildDrawerItem(
+              icon: Icons.settings_rounded,
+              label: isArabic ? 'الإعدادات' : 'Settings',
+              isArabic: isArabic,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/settings');
+              },
+            ),
+            const Spacer(),
+            // Language toggle
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _buildDrawerItem(
+                icon: Icons.language_rounded,
+                label: isArabic ? 'English' : 'العربية',
+                isArabic: isArabic,
+                onTap: () {
+                  ref
+                      .read(localizationProvider.notifier)
+                      .setLanguage(isArabic ? AppLanguage.en : AppLanguage.ar);
+                },
+              ),
+            ),
+            // Theme toggle
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: _buildDrawerItem(
+                icon: Icons.dark_mode_rounded,
+                label: isArabic ? 'تغيير المظهر' : 'Toggle Theme',
+                isArabic: isArabic,
+                onTap: () {
+                  ref.read(localizationProvider.notifier).toggleTheme();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem({
+    required IconData icon,
+    required String label,
+    required bool isArabic,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: AppColors.primary, size: 22),
+      title: Text(
+        label,
+        style: AppFonts.style(
+          isArabic: isArabic,
+          fontSize: AppFonts.sizeBody,
+          fontWeight: AppFonts.medium,
+          color: AppColors.text,
+        ),
+      ),
+      onTap: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+    );
+  }
+
   Widget _buildResultsPill({
     required String label,
     required Key key,
@@ -204,7 +415,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -213,10 +424,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Text(
         label,
         textAlign: TextAlign.center,
-        style: GoogleFonts.getFont(
-          isArabic ? 'Cairo' : 'Poppins',
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+        style: AppFonts.style(
+          isArabic: isArabic,
+          fontSize: AppFonts.sizeSmall,
+          fontWeight: AppFonts.semiBold,
           color: AppColors.text,
         ),
       ),
@@ -236,7 +447,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               ),
@@ -245,7 +456,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.location_on_rounded,
                 color: AppColors.primary,
                 size: 18,
@@ -253,10 +464,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(width: 8),
               Text(
                 station.name,
-                style: GoogleFonts.getFont(
-                  isArabic ? 'Cairo' : 'Poppins',
+                style: AppFonts.style(
+                  isArabic: isArabic,
                   fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: AppFonts.semiBold,
                   color: AppColors.text,
                 ),
               ),
@@ -288,7 +499,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: Colors.black.withValues(alpha: 0.12),
                 blurRadius: 18,
                 offset: const Offset(0, 10),
               ),
@@ -300,10 +511,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               Text(
                 activeTripLabel,
-                style: GoogleFonts.getFont(
-                  isArabic ? 'Cairo' : 'Poppins',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.style(
+                  isArabic: isArabic,
+                  fontSize: AppFonts.sizeBody,
+                  fontWeight: AppFonts.semiBold,
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -311,10 +522,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               if (activeTrip == null)
                 Text(
                   noActiveTripLabel,
-                  style: GoogleFonts.getFont(
-                    isArabic ? 'Cairo' : 'Poppins',
+                  style: AppFonts.style(
+                    isArabic: isArabic,
                     fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: AppFonts.semiBold,
                     color: AppColors.text,
                   ),
                 )
@@ -327,10 +538,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         children: [
                           Text(
                             activeTrip.stationName,
-                            style: GoogleFonts.getFont(
-                              isArabic ? 'Cairo' : 'Poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                            style: AppFonts.style(
+                              isArabic: isArabic,
+                              fontSize: AppFonts.sizeMedium,
+                              fontWeight: AppFonts.bold,
                               color: AppColors.text,
                             ),
                           ),
@@ -341,14 +552,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               (value) => value,
                             ),
                             builder: (context, snapshot) {
-                              final duration =
-                                  DateTime.now().difference(activeTrip.startTime);
+                              final duration = DateTime.now().difference(
+                                activeTrip.startTime,
+                              );
                               return Text(
                                 _formatDuration(duration),
-                                style: GoogleFonts.getFont(
-                                  isArabic ? 'Cairo' : 'Poppins',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                                style: AppFonts.style(
+                                  isArabic: isArabic,
+                                  fontSize: AppFonts.sizeBody,
+                                  fontWeight: AppFonts.semiBold,
                                   color: AppColors.primary,
                                 ),
                               );
@@ -377,10 +589,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                       child: Text(
                         isArabic ? AppStringsAr.endRide : AppStringsEn.endRide,
-                        style: GoogleFonts.getFont(
-                          isArabic ? 'Cairo' : 'Poppins',
+                        style: AppFonts.style(
+                          isArabic: isArabic,
                           fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ),
@@ -398,9 +610,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 label: tripHistoryLabel,
                 icon: Icons.history_rounded,
                 isArabic: isArabic,
-                onTap: () {
-                  _showComingSoon(context);
-                },
+                onTap: () => context.push('/trips'),
               ),
             ),
             const SizedBox(width: 12),
@@ -410,9 +620,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 label: couponsLabel,
                 icon: Icons.local_offer_rounded,
                 isArabic: isArabic,
-                onTap: () {
-                  _showComingSoon(context);
-                },
+                onTap: () => context.push('/coupons'),
               ),
             ),
           ],
@@ -441,7 +649,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 16,
                 offset: const Offset(0, 8),
               ),
@@ -453,7 +661,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.12),
+                  color: AppColors.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: AppColors.primary, size: 18),
@@ -462,10 +670,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Expanded(
                 child: Text(
                   label,
-                  style: GoogleFonts.getFont(
-                    isArabic ? 'Cairo' : 'Poppins',
+                  style: AppFonts.style(
+                    isArabic: isArabic,
                     fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: AppFonts.semiBold,
                     color: AppColors.text,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -488,26 +696,5 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return '$minutes:$seconds';
-  }
-
-  void _showComingSoon(BuildContext context) {
-    final localization = ref.read(localizationProvider);
-    final isArabic = localization.language == AppLanguage.ar;
-    final label =
-        isArabic ? AppStringsAr.comingSoon : AppStringsEn.comingSoon;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          label,
-          style: GoogleFonts.getFont(
-            isArabic ? 'Cairo' : 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        backgroundColor: AppColors.primary,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
   }
 }

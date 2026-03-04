@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/theme/app_theme.dart';
 
 /// Reusable custom text field for auth forms
@@ -70,17 +70,12 @@ class _AuthFormFieldState extends State<AuthFormField> {
           padding: const EdgeInsets.only(bottom: AppDimensions.paddingSmall),
           child: Text(
             widget.label,
-            style: widget.isArabic
-                ? GoogleFonts.cairo(
-                    fontSize: isSmallScreen ? 14 : 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.greyDark,
-                  )
-                : GoogleFonts.poppins(
-                    fontSize: isSmallScreen ? 14 : 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.greyDark,
-                  ),
+            style: AppFonts.style(
+              isArabic: widget.isArabic,
+              fontSize: isSmallScreen ? 14 : 15,
+              fontWeight: FontWeight.w600,
+              color: AppColors.greyDark,
+            ),
           ),
         ),
 
@@ -100,26 +95,18 @@ class _AuthFormFieldState extends State<AuthFormField> {
             widget.onChanged?.call(value);
           },
           onFieldSubmitted: widget.onSubmitted,
-          style: widget.isArabic
-              ? GoogleFonts.cairo(
-                  fontSize: isSmallScreen ? 15 : 16,
-                  color: AppColors.greyDark,
-                )
-              : GoogleFonts.poppins(
-                  fontSize: isSmallScreen ? 15 : 16,
-                  color: AppColors.greyDark,
-                ),
+          style: AppFonts.style(
+            isArabic: widget.isArabic,
+            fontSize: isSmallScreen ? 15 : 16,
+            color: AppColors.greyDark,
+          ),
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: widget.isArabic
-                ? GoogleFonts.cairo(
-                    fontSize: isSmallScreen ? 14 : 15,
-                    color: AppColors.grey,
-                  )
-                : GoogleFonts.poppins(
-                    fontSize: isSmallScreen ? 14 : 15,
-                    color: AppColors.grey,
-                  ),
+            hintStyle: AppFonts.style(
+              isArabic: widget.isArabic,
+              fontSize: isSmallScreen ? 14 : 15,
+              color: AppColors.grey,
+            ),
             prefixIcon: widget.prefixIcon != null
                 ? Icon(
                     widget.prefixIcon,
@@ -187,17 +174,12 @@ class _AuthFormFieldState extends State<AuthFormField> {
               duration: const Duration(milliseconds: 200),
               child: Text(
                 _errorMessage ?? '',
-                style: widget.isArabic
-                    ? GoogleFonts.cairo(
-                        fontSize: 12,
-                        color: AppColors.error,
-                        fontWeight: FontWeight.w500,
-                      )
-                    : GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: AppColors.error,
-                        fontWeight: FontWeight.w500,
-                      ),
+                style: AppFonts.style(
+                  isArabic: widget.isArabic,
+                  fontSize: 12,
+                  color: AppColors.error,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -238,7 +220,7 @@ class PasswordStrengthIndicator extends StatelessWidget {
             child: LinearProgressIndicator(
               value: strength / 3.0,
               minHeight: 6,
-              backgroundColor: AppColors.grey.withOpacity(0.2),
+              backgroundColor: AppColors.grey.withValues(alpha: 0.2),
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -246,17 +228,12 @@ class PasswordStrengthIndicator extends StatelessWidget {
           // Strength label
           Text(
             label,
-            style: isArabic
-                ? GoogleFonts.cairo(
-                    fontSize: 12,
-                    color: color,
-                    fontWeight: FontWeight.w600,
-                  )
-                : GoogleFonts.poppins(
-                    fontSize: 12,
-                    color: color,
-                    fontWeight: FontWeight.w600,
-                  ),
+            style: AppFonts.style(
+              isArabic: isArabic,
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),

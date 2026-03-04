@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/localization/localization_provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/common_widgets.dart';
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           child: TextButton(
             onPressed: _navigateToAuth,
             style: TextButton.styleFrom(
-              backgroundColor: AppColors.white.withOpacity(0.9),
+              backgroundColor: AppColors.white.withValues(alpha: 0.9),
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingLarge,
                 vertical: AppDimensions.paddingSmall,
@@ -133,17 +133,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             ),
             child: Text(
               isArabic ? 'تخطي' : 'Skip',
-              style: isArabic
-                  ? GoogleFonts.cairo(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
-                    )
-                  : GoogleFonts.poppins(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
-                    ),
+              style: AppFonts.style(
+                isArabic: isArabic,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary,
+              ),
             ),
           ),
         ),
@@ -170,7 +165,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
               spreadRadius: 2,
@@ -219,12 +214,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       width: isActive ? 32 : 8,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.primary : AppColors.grey.withOpacity(0.4),
+        color: isActive
+            ? AppColors.primary
+            : AppColors.grey.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(AppDimensions.radiusSmall),
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.4),
+                  color: AppColors.primary.withValues(alpha: 0.4),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),

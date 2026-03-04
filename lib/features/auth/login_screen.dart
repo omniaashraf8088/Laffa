@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
@@ -228,10 +228,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         height: 80,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.15),
+              color: AppColors.primary.withValues(alpha: 0.15),
               blurRadius: 20,
               offset: const Offset(0, 5),
             ),
@@ -249,17 +249,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget _buildTitle(bool isArabic, bool isSmallScreen) {
     return Text(
       isArabic ? AppStringsAr.loginTitle : AppStringsEn.loginTitle,
-      style: isArabic
-          ? GoogleFonts.cairo(
-              fontSize: isSmallScreen ? 28 : 32,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            )
-          : GoogleFonts.poppins(
-              fontSize: isSmallScreen ? 28 : 32,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            ),
+      style: AppFonts.style(
+        isArabic: isArabic,
+        fontSize: isSmallScreen ? 28 : 32,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primary,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -267,17 +262,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget _buildSubtitle(bool isArabic, bool isSmallScreen) {
     return Text(
       isArabic ? AppStringsAr.loginSubtitle : AppStringsEn.loginSubtitle,
-      style: isArabic
-          ? GoogleFonts.cairo(
-              fontSize: isSmallScreen ? 15 : 16,
-              color: AppColors.grey,
-              height: 1.5,
-            )
-          : GoogleFonts.poppins(
-              fontSize: isSmallScreen ? 15 : 16,
-              color: AppColors.grey,
-              height: 1.5,
-            ),
+      style: AppFonts.style(
+        isArabic: isArabic,
+        fontSize: isSmallScreen ? 15 : 16,
+        color: AppColors.grey,
+        height: 1.5,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -297,7 +287,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         margin: const EdgeInsets.only(bottom: AppDimensions.paddingLarge),
         padding: const EdgeInsets.all(AppDimensions.paddingMedium),
         decoration: BoxDecoration(
-          color: AppColors.error.withOpacity(0.1),
+          color: AppColors.error.withValues(alpha: 0.1),
           border: Border.all(color: AppColors.error, width: 1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
         ),
@@ -308,17 +298,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             Expanded(
               child: Text(
                 authState.errorMessage ?? '',
-                style: isArabic
-                    ? GoogleFonts.cairo(
-                        fontSize: 14,
-                        color: AppColors.error,
-                        fontWeight: FontWeight.w500,
-                      )
-                    : GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: AppColors.error,
-                        fontWeight: FontWeight.w500,
-                      ),
+                style: AppFonts.style(
+                  isArabic: isArabic,
+                  fontSize: 14,
+                  color: AppColors.error,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],
@@ -338,17 +323,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         child: Text(
           isArabic ? AppStringsAr.forgotPassword : AppStringsEn.forgotPassword,
-          style: isArabic
-              ? GoogleFonts.cairo(
-                  fontSize: 14,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                )
-              : GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                ),
+          style: AppFonts.style(
+            isArabic: isArabic,
+            fontSize: 14,
+            color: AppColors.primary,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
@@ -390,17 +370,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           : AppStringsEn.savePassword,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: isArabic
-                          ? GoogleFonts.cairo(
-                              fontSize: 14,
-                              color: AppColors.text,
-                              fontWeight: FontWeight.w600,
-                            )
-                          : GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: AppColors.text,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      style: AppFonts.style(
+                        isArabic: isArabic,
+                        fontSize: 14,
+                        color: AppColors.text,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -428,9 +403,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           isArabic
               ? AppStringsAr.dontHaveAccount
               : AppStringsEn.dontHaveAccount,
-          style: isArabic
-              ? GoogleFonts.cairo(fontSize: 14, color: AppColors.grey)
-              : GoogleFonts.poppins(fontSize: 14, color: AppColors.grey),
+          style: AppFonts.style(
+            isArabic: isArabic,
+            fontSize: 14,
+            color: AppColors.grey,
+          ),
         ),
         TextButton(
           onPressed: () => context.push('/signup'),
@@ -440,17 +417,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           child: Text(
             isArabic ? AppStringsAr.signup : AppStringsEn.signup,
-            style: isArabic
-                ? GoogleFonts.cairo(
-                    fontSize: 14,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                  )
-                : GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                  ),
+            style: AppFonts.style(
+              isArabic: isArabic,
+              fontSize: 14,
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],

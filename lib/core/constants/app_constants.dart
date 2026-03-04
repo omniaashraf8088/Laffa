@@ -1,10 +1,10 @@
 class AppConstants {
   // App Info
-  static const String appName = 'Smart Wheel';
+  static const String appName = 'Laffa';
   static const String appVersion = '1.0.0';
 
   // API Endpoints (placeholder)
-  static const String baseUrl = 'https://api.smartwheel.com';
+  static const String baseUrl = 'https://api.laffa.com';
 
   // Pagination
   static const int pageSize = 20;

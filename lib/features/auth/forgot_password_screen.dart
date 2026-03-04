@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
@@ -184,15 +184,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                         children: [
                           Text(
                             isArabic ? 'العودة إلى ' : 'Back to ',
-                            style: isArabic
-                                ? GoogleFonts.cairo(
-                                    fontSize: 14,
-                                    color: AppColors.grey,
-                                  )
-                                : GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: AppColors.grey,
-                                  ),
+                            style: AppFonts.style(
+                              isArabic: isArabic,
+                              fontSize: 14,
+                              color: AppColors.grey,
+                            ),
                           ),
                           TextButton(
                             onPressed: () => context.push('/login'),
@@ -204,17 +200,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                               isArabic
                                   ? AppStringsAr.login
                                   : AppStringsEn.login,
-                              style: isArabic
-                                  ? GoogleFonts.cairo(
-                                      fontSize: 14,
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w700,
-                                    )
-                                  : GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                              style: AppFonts.style(
+                                isArabic: isArabic,
+                                fontSize: 14,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ],
@@ -237,10 +228,10 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
         height: 80,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.15),
+              color: AppColors.primary.withValues(alpha: 0.15),
               blurRadius: 20,
               offset: const Offset(0, 5),
             ),
@@ -258,17 +249,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   Widget _buildTitle(bool isArabic, bool isSmallScreen) {
     return Text(
       isArabic ? AppStringsAr.resetPassword : AppStringsEn.resetPassword,
-      style: isArabic
-          ? GoogleFonts.cairo(
-              fontSize: isSmallScreen ? 28 : 32,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            )
-          : GoogleFonts.poppins(
-              fontSize: isSmallScreen ? 28 : 32,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-            ),
+      style: AppFonts.style(
+        isArabic: isArabic,
+        fontSize: isSmallScreen ? 28 : 32,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primary,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -278,17 +264,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       isArabic
           ? 'أدخل بريدك الإلكتروني لاستقبال رابط إعادة تعيين كلمة المرور'
           : 'Enter your email to receive a password reset link',
-      style: isArabic
-          ? GoogleFonts.cairo(
-              fontSize: isSmallScreen ? 15 : 16,
-              color: AppColors.grey,
-              height: 1.5,
-            )
-          : GoogleFonts.poppins(
-              fontSize: isSmallScreen ? 15 : 16,
-              color: AppColors.grey,
-              height: 1.5,
-            ),
+      style: AppFonts.style(
+        isArabic: isArabic,
+        fontSize: isSmallScreen ? 15 : 16,
+        color: AppColors.grey,
+        height: 1.5,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -297,7 +278,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingLarge),
       decoration: BoxDecoration(
-        color: AppColors.success.withOpacity(0.1),
+        color: AppColors.success.withValues(alpha: 0.1),
         border: Border.all(color: AppColors.success, width: 1.5),
         borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
       ),
@@ -307,17 +288,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           const SizedBox(height: AppDimensions.paddingLarge),
           Text(
             isArabic ? AppStringsAr.resetLinkSent : AppStringsEn.resetLinkSent,
-            style: isArabic
-                ? GoogleFonts.cairo(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.success,
-                  )
-                : GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.success,
-                  ),
+            style: AppFonts.style(
+              isArabic: isArabic,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.success,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppDimensions.paddingMedium),
@@ -325,9 +301,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
             isArabic
                 ? 'تحقق من بريدك الإلكتروني للحصول على تعليمات إعادة التعيين'
                 : 'Check your email for password reset instructions',
-            style: isArabic
-                ? GoogleFonts.cairo(fontSize: 14, color: AppColors.grey)
-                : GoogleFonts.poppins(fontSize: 14, color: AppColors.grey),
+            style: AppFonts.style(
+              isArabic: isArabic,
+              fontSize: 14,
+              color: AppColors.grey,
+            ),
             textAlign: TextAlign.center,
           ),
         ],

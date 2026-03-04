@@ -28,12 +28,12 @@ class OnboardingModel {
       isArabic ? descriptionAr : descriptionEn;
 }
 
-/// Predefined onboarding pages for Smart Wheel app
+/// Predefined onboarding pages for Laffa app
 class OnboardingData {
   static const List<OnboardingModel> pages = [
     OnboardingModel(
-      titleEn: 'Welcome to Smart Wheel',
-      titleAr: 'مرحباً بك في سمارت ويل',
+      titleEn: 'Welcome to Laffa',
+      titleAr: 'مرحباً بك في Laffa',
       descriptionEn: 'Your smart way to move around the city easily.',
       descriptionAr: 'طريقتك الذكية للتنقل في المدينة بسهولة.',
       lottieAssetPath: 'assets/animations/onboarding_1.json',

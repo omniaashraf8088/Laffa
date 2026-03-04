@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/constants/fonts.dart';
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
@@ -15,11 +15,11 @@ class StationCardWidget extends ConsumerStatefulWidget {
   final String? heroTag;
 
   const StationCardWidget({
-    Key? key,
+    super.key,
     required this.station,
     required this.onStartRidePressed,
     this.heroTag,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<StationCardWidget> createState() => _StationCardWidgetState();
@@ -56,14 +56,23 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
     final localization = ref.watch(localizationProvider);
     final isArabic = localization.language == AppLanguage.ar;
     final availableScootersLabel = isArabic
-      ? AppStringsAr.availableScooters
-      : AppStringsEn.availableScooters;
-    final startRideLabel =
-      isArabic ? AppStringsAr.startRide : AppStringsEn.startRide;
-    final noHiddenFeesLabel =
-      isArabic ? AppStringsAr.noHiddenFees : AppStringsEn.noHiddenFees;
+        ? AppStringsAr.availableScooters
+        : AppStringsEn.availableScooters;
+    final startRideLabel = isArabic
+        ? AppStringsAr.startRide
+        : AppStringsEn.startRide;
+    final noHiddenFeesLabel = isArabic
+        ? AppStringsAr.noHiddenFees
+        : AppStringsEn.noHiddenFees;
     final homeState = ref.watch(homeProvider);
     final isLoading = homeState.isLoading;
+
+    final stationNameStyle = AppFonts.style(
+      isArabic: isArabic,
+      fontSize: 22,
+      fontWeight: AppFonts.bold,
+      color: AppColors.text,
+    );
 
     return AnimatedBuilder(
       animation: _slideAnimation,
@@ -82,7 +91,7 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
@@ -110,27 +119,14 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
 
                 // Station name
                 widget.heroTag == null
-                    ? Text(
-                        widget.station.name,
-                        style: GoogleFonts.getFont(
-                          isArabic ? 'Cairo' : 'Poppins',
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.text,
-                        ),
-                      )
+                    ? Text(widget.station.name, style: stationNameStyle)
                     : Hero(
                         tag: widget.heroTag!,
                         child: Material(
                           color: Colors.transparent,
                           child: Text(
                             widget.station.name,
-                            style: GoogleFonts.getFont(
-                              isArabic ? 'Cairo' : 'Poppins',
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.text,
-                            ),
+                            style: stationNameStyle,
                           ),
                         ),
                       ),
@@ -139,7 +135,7 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                 // Station details row
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on_rounded,
                       color: AppColors.primary,
                       size: 16,
@@ -148,10 +144,10 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                     Expanded(
                       child: Text(
                         '${widget.station.latitude.toStringAsFixed(4)}, ${widget.station.longitude.toStringAsFixed(4)}',
-                        style: GoogleFonts.getFont(
-                          isArabic ? 'Cairo' : 'Poppins',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
+                        style: AppFonts.style(
+                          isArabic: isArabic,
+                          fontSize: AppFonts.sizeSmall,
+                          fontWeight: AppFonts.medium,
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -174,10 +170,10 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.two_wheeler_rounded,
                           color: AppColors.primary,
                           size: 28,
@@ -190,20 +186,20 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                           children: [
                             Text(
                               availableScootersLabel,
-                              style: GoogleFonts.getFont(
-                                isArabic ? 'Cairo' : 'Poppins',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                              style: AppFonts.style(
+                                isArabic: isArabic,
+                                fontSize: AppFonts.sizeSmall,
+                                fontWeight: AppFonts.medium,
                                 color: AppColors.textSecondary,
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               '${widget.station.availableScooters}',
-                              style: GoogleFonts.getFont(
-                                isArabic ? 'Cairo' : 'Poppins',
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                              style: AppFonts.style(
+                                isArabic: isArabic,
+                                fontSize: AppFonts.sizeHeading,
+                                fontWeight: AppFonts.bold,
                                 color: AppColors.primary,
                               ),
                             ),
@@ -223,8 +219,8 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                     onPressed: isLoading ? null : widget.onStartRidePressed,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
-                      disabledBackgroundColor: AppColors.primary.withOpacity(
-                        0.5,
+                      disabledBackgroundColor: AppColors.primary.withValues(
+                        alpha: 0.5,
                       ),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -237,17 +233,17 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                             height: 24,
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white.withOpacity(0.8),
+                                Colors.white.withValues(alpha: 0.8),
                               ),
                               strokeWidth: 2.5,
                             ),
                           )
                         : Text(
                             startRideLabel,
-                            style: GoogleFonts.getFont(
-                              isArabic ? 'Cairo' : 'Poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            style: AppFonts.style(
+                              isArabic: isArabic,
+                              fontSize: AppFonts.sizeMedium,
+                              fontWeight: AppFonts.bold,
                               color: Colors.white,
                             ),
                           ),
@@ -259,10 +255,10 @@ class _StationCardWidgetState extends ConsumerState<StationCardWidget>
                 Center(
                   child: Text(
                     noHiddenFeesLabel,
-                    style: GoogleFonts.getFont(
-                      isArabic ? 'Cairo' : 'Poppins',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                    style: AppFonts.style(
+                      isArabic: isArabic,
+                      fontSize: AppFonts.sizeSmall,
+                      fontWeight: AppFonts.medium,
                       color: AppColors.textTertiary,
                     ),
                   ),

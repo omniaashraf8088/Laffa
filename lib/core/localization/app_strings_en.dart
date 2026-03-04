@@ -1,6 +1,6 @@
 class AppStringsEn {
   // Global
-  static const String appName = 'Smart Wheel';
+  static const String appName = 'Laffa';
   static const String ok = 'OK';
   static const String cancel = 'Cancel';
   static const String save = 'Save';
@@ -15,11 +15,11 @@ class AppStringsEn {
   static const String warning = 'Warning';
 
   // Splash
-  static const String splashTitle = 'Smart Wheel';
+  static const String splashTitle = 'Laffa';
   static const String splashSubtitle = 'Your Smart Scooter Solution';
 
   // Onboarding
-  static const String onboardingTitle1 = 'Welcome to Smart Wheel';
+  static const String onboardingTitle1 = 'Welcome to Laffa';
   static const String onboardingDesc1 =
       'Your smart way to move around the city easily.';
 
@@ -45,7 +45,7 @@ class AppStringsEn {
   static const String loginTitle = 'Sign In';
   static const String loginSubtitle = 'Welcome back! Sign in to your account';
   static const String signupTitle = 'Create Account';
-  static const String signupSubtitle = 'Join Smart Wheel community today';
+  static const String signupSubtitle = 'Join Laffa community today';
 
   static const String email = 'Email';
   static const String password = 'Password';
@@ -91,10 +91,10 @@ class AppStringsEn {
   static const String startRide = 'Start Ride';
   static const String endRide = 'End Ride';
   static const String tripHistory = 'Trip History';
-    static const String searchStations = 'Search stations...';
-    static const String availableScooters = 'Available scooters';
-    static const String noHiddenFees = 'No hidden fees • Ride safely';
-    static const String savePassword = 'Save password';
+  static const String searchStations = 'Search stations...';
+  static const String availableScooters = 'Available scooters';
+  static const String noHiddenFees = 'No hidden fees • Ride safely';
+  static const String savePassword = 'Save password';
 
   // Trip Details
   static const String selectStation = 'Select Station';
@@ -150,7 +150,14 @@ class AppStringsEn {
   static const String retry = 'Retry';
   static const String noInternet = 'No internet connection';
   static const String somethingWentWrong = 'Something went wrong';
-    static const String gettingLocation = 'Getting your location...';
-    static const String loadingMap = 'Loading map...';
-    static const String comingSoon = 'Coming soon';
+  static const String gettingLocation = 'Getting your location...';
+  static const String loadingMap = 'Loading map...';
+  static const String comingSoon = 'Coming soon';
+
+  // Trips
+  static const String clearAll = 'Clear All';
+  static const String clearAllTrips = 'Clear all trips?';
+  static const String clearAllTripsConfirm = 'All trip history will be deleted. Are you sure?';
+  static const String tripDeleted = 'Trip deleted';
+  static const String undo = 'Undo';
 }

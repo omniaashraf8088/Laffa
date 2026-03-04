@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/constants/fonts.dart';
 import '../../core/localization/app_strings_ar.dart';
 import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
@@ -9,7 +9,7 @@ import '../../core/theme/app_theme.dart';
 import 'home_provider.dart';
 
 class SearchBarWidget extends ConsumerStatefulWidget {
-  const SearchBarWidget({Key? key}) : super(key: key);
+  const SearchBarWidget({super.key});
 
   @override
   ConsumerState<SearchBarWidget> createState() => _SearchBarWidgetState();
@@ -35,14 +35,15 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
   Widget build(BuildContext context) {
     final localization = ref.watch(localizationProvider);
     final isArabic = localization.language == AppLanguage.ar;
-    final searchHint =
-      isArabic ? AppStringsAr.searchStations : AppStringsEn.searchStations;
+    final searchHint = isArabic
+        ? AppStringsAr.searchStations
+        : AppStringsEn.searchStations;
 
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -59,33 +60,33 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
         onSubmitted: (query) {
           ref.read(homeProvider.notifier).searchStations(query);
         },
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        shadowColor: MaterialStateProperty.all(Colors.transparent),
+        backgroundColor: WidgetStateProperty.all(Colors.white),
+        shadowColor: WidgetStateProperty.all(Colors.transparent),
         hintText: searchHint,
-        hintStyle: MaterialStateProperty.all(
-          GoogleFonts.getFont(
-            isArabic ? 'Cairo' : 'Poppins',
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+        hintStyle: WidgetStateProperty.all(
+          AppFonts.style(
+            isArabic: isArabic,
+            fontSize: AppFonts.sizeBody,
+            fontWeight: AppFonts.medium,
             color: AppColors.textSecondary,
           ),
         ),
-        textStyle: MaterialStateProperty.all(
-          GoogleFonts.getFont(
-            isArabic ? 'Cairo' : 'Poppins',
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+        textStyle: WidgetStateProperty.all(
+          AppFonts.style(
+            isArabic: isArabic,
+            fontSize: AppFonts.sizeBody,
+            fontWeight: AppFonts.medium,
             color: AppColors.text,
           ),
         ),
-        elevation: MaterialStateProperty.all(0),
-        shape: MaterialStateProperty.all(
+        elevation: WidgetStateProperty.all(0),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: const BorderSide(color: AppColors.border, width: 1),
           ),
         ),
-        padding: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
         leading: Padding(
@@ -106,7 +107,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                       _isSearching = false;
                     });
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.close_rounded,
                     color: AppColors.primary,
                     size: 20,

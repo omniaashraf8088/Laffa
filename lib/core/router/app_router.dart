@@ -13,8 +13,16 @@ import '../../features/trips/trips_screen.dart';
 import '../../features/coupons/coupons_screen.dart';
 import '../../features/chat/chat_screen.dart';
 import '../../features/settings/settings_screen.dart';
+import '../../features/booking/presentation/booking_screen.dart';
+import '../../features/payment/presentation/payment_screen.dart';
+import '../../features/trip/presentation/start_trip_screen.dart';
+import '../../features/trip/presentation/end_trip_screen.dart';
+import '../../features/rating/presentation/rating_screen.dart';
 
+/// Centralized router configuration for all app navigation.
+/// Uses GoRouter with named routes and query parameter support.
 class AppRouter {
+  // Existing routes
   static const String splash = '/';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
@@ -27,8 +35,16 @@ class AppRouter {
   static const String chat = '/chat';
   static const String settings = '/settings';
 
+  // New feature routes
+  static const String booking = '/booking';
+  static const String payment = '/payment';
+  static const String startTrip = '/start-trip';
+  static const String endTrip = '/end-trip';
+  static const String rating = '/rating';
+
   static final GoRouter router = GoRouter(
     routes: [
+      // ── Existing Routes ──────────────────────────
       GoRoute(path: splash, builder: (context, state) => const SplashScreen()),
       GoRoute(
         path: onboarding,
@@ -54,6 +70,62 @@ class AppRouter {
       GoRoute(
         path: settings,
         builder: (context, state) => const SettingsScreen(),
+      ),
+
+      // ── Booking Route ────────────────────────────
+      // Expects query params: stationId, stationName
+      GoRoute(
+        path: booking,
+        builder: (context, state) {
+          final stationId =
+              state.uri.queryParameters['stationId'] ?? 'unknown';
+          final stationName =
+              state.uri.queryParameters['stationName'] ?? 'Unknown Station';
+          return BookingScreen(
+            stationId: stationId,
+            stationName: stationName,
+          );
+        },
+      ),
+
+      // ── Payment Route ────────────────────────────
+      // Expects query params: bookingId, amount
+      GoRoute(
+        path: payment,
+        builder: (context, state) {
+          final bookingId =
+              state.uri.queryParameters['bookingId'] ?? 'unknown';
+          final amount =
+              double.tryParse(state.uri.queryParameters['amount'] ?? '0') ??
+                  0.0;
+          return PaymentScreen(
+            bookingId: bookingId,
+            amount: amount,
+          );
+        },
+      ),
+
+      // ── Start Trip Route ─────────────────────────
+      GoRoute(
+        path: startTrip,
+        builder: (context, state) => const StartTripScreen(),
+      ),
+
+      // ── End Trip Route ───────────────────────────
+      GoRoute(
+        path: endTrip,
+        builder: (context, state) => const EndTripScreen(),
+      ),
+
+      // ── Rating Route ─────────────────────────────
+      // Expects query param: tripId
+      GoRoute(
+        path: rating,
+        builder: (context, state) {
+          final tripId =
+              state.uri.queryParameters['tripId'] ?? 'unknown';
+          return RatingScreen(tripId: tripId);
+        },
       ),
     ],
     initialLocation: splash,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/constants/fonts.dart';
 import '../../core/theme/app_theme.dart';
 import 'onboarding_model.dart';
 
@@ -86,7 +86,7 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
           end: Alignment.bottomCenter,
           colors: [
             widget.page.backgroundColor,
-            widget.page.backgroundColor.withOpacity(0.8),
+            widget.page.backgroundColor.withValues(alpha: 0.8),
             AppColors.background,
           ],
         ),
@@ -131,10 +131,10 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
             height: size,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.white.withOpacity(0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withValues(alpha: 0.15),
                   blurRadius: 30,
                   offset: const Offset(0, 10),
                   spreadRadius: 5,
@@ -187,19 +187,13 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
             // Title
             Text(
               widget.page.getTitle(widget.isArabic),
-              style: widget.isArabic
-                  ? GoogleFonts.cairo(
-                      fontSize: isSmallScreen ? 28 : 36,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                      height: 1.3,
-                    )
-                  : GoogleFonts.poppins(
-                      fontSize: isSmallScreen ? 28 : 36,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                      height: 1.2,
-                    ),
+              style: AppFonts.style(
+                isArabic: widget.isArabic,
+                fontSize: isSmallScreen ? 28 : 36,
+                fontWeight: FontWeight.w700,
+                color: AppColors.primary,
+                height: widget.isArabic ? 1.3 : 1.2,
+              ),
               textAlign: TextAlign.center,
             ),
 
@@ -210,19 +204,13 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
               constraints: const BoxConstraints(maxWidth: 500),
               child: Text(
                 widget.page.getDescription(widget.isArabic),
-                style: widget.isArabic
-                    ? GoogleFonts.cairo(
-                        fontSize: isSmallScreen ? 16 : 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.greyDark,
-                        height: 1.6,
-                      )
-                    : GoogleFonts.poppins(
-                        fontSize: isSmallScreen ? 16 : 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.greyDark,
-                        height: 1.5,
-                      ),
+                style: AppFonts.style(
+                  isArabic: widget.isArabic,
+                  fontSize: isSmallScreen ? 16 : 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.greyDark,
+                  height: widget.isArabic ? 1.6 : 1.5,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

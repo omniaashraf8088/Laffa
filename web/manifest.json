@@ -1,11 +1,11 @@
 {
-    "name": "laffa",
-    "short_name": "laffa",
+    "name": "Laffa",
+    "short_name": "Laffa",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Laffa - Smart Scooter Sharing App",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
