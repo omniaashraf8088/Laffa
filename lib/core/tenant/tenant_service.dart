@@ -181,6 +181,56 @@ class TenantNotifier extends StateNotifier<TenantState> {
     }
   }
 
+  /// Initializes tenant context directly from auth data.
+  /// Sets user immediately so navigation is not blocked,
+  /// then attempts to load companies in the background.
+  Future<void> initializeFromAuth({
+    required String userId,
+    required String email,
+    required String name,
+    String? phone,
+  }) async {
+    // Create user profile immediately — no API wait
+    final user = GlobalUser(
+      id: userId,
+      email: email,
+      name: name,
+      phone: phone,
+      role: UserRole.rider,
+      createdAt: DateTime.now(),
+    );
+
+    state = state.copyWith(currentUser: user, isLoading: false, error: null);
+
+    // Try to load companies in the background with timeout
+    _loadCompaniesInBackground(user);
+  }
+
+  /// Loads companies asynchronously without blocking navigation.
+  Future<void> _loadCompaniesInBackground(GlobalUser user) async {
+    try {
+      final companies = await _loadCompaniesForRole(
+        user,
+      ).timeout(const Duration(seconds: 5), onTimeout: () => []);
+
+      state = state.copyWith(availableCompanies: companies);
+
+      // Restore last active company
+      final savedCompanyId = _storage.getString(_activeCompanyKey);
+      final companyIdToUse = savedCompanyId ?? user.activeCompanyId;
+
+      if (companyIdToUse != null) {
+        try {
+          await setActiveCompany(companyIdToUse);
+        } catch (_) {
+          // Ignore if saved company no longer exists
+        }
+      }
+    } catch (_) {
+      // Non-blocking — companies just won't be available
+    }
+  }
+
   /// Clears tenant context on logout.
   void clear() {
     _storage.remove(_activeCompanyKey);

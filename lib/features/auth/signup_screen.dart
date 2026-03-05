@@ -9,6 +9,7 @@ import '../../core/localization/app_strings_en.dart';
 import '../../core/localization/localization_provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../core/tenant/tenant_service.dart';
 import 'auth_form_widget.dart';
 import 'auth_validators.dart';
 import 'auth_provider.dart';
@@ -108,10 +109,29 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final size = MediaQuery.of(context).size;
     final isSmallScreen = size.width < 600;
 
-    // Navigate on successful signup
-    if (authState.isAuthenticated && authState.user != null) {
+    // Bridge auth → tenant: after signup, initialize tenant context
+    ref.listen<AuthState>(authProvider, (prev, next) {
+      if (next.isAuthenticated &&
+          next.user != null &&
+          (prev == null || !prev.isAuthenticated)) {
+        final user = next.user!;
+        ref
+            .read(tenantProvider.notifier)
+            .initializeFromAuth(
+              userId: user.id,
+              email: user.email,
+              name: user.name,
+              phone: user.phone,
+            );
+      }
+    });
+
+    // Navigate once tenant is initialized
+    final tenantState = ref.watch(tenantProvider);
+    if (tenantState.isAuthenticated && !tenantState.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.go('/home');
+        if (!context.mounted) return;
+        context.go('/company-select');
       });
     }
 

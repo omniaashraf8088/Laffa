@@ -214,8 +214,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 
       // Rider
       if (role.isRider) {
-        if (!hasCompany) return AppRouter.companySelect;
-        // Allow all rider routes
+        // Allow all rider routes (company selection is optional)
         return null;
       }
 
@@ -237,6 +236,6 @@ String _homeRouteForRole(UserRole role, bool hasCompany) {
     case UserRole.companyAdmin:
       return hasCompany ? AppRouter.companyAdmin : AppRouter.companySelect;
     case UserRole.rider:
-      return hasCompany ? AppRouter.home : AppRouter.companySelect;
+      return AppRouter.home;
   }
 }
