@@ -10,7 +10,7 @@ class AppConstants {
   static const int pageSize = 20;
 
   // Animation Durations
-  static const Duration splashDuration = Duration(milliseconds: 5000);
+  static const Duration splashDuration = Duration(milliseconds: 2000);
   static const Duration cardAnimationDuration = Duration(milliseconds: 300);
   static const Duration pageTransitionDuration = Duration(milliseconds: 400);
 

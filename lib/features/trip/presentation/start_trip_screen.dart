@@ -122,12 +122,12 @@ class _StartTripScreenState extends ConsumerState<StartTripScreen>
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.success.withOpacity(
+                        color: AppColors.success.withValues(alpha: 
                           0.1 + (_pulseController.value * 0.1),
                         ),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: AppColors.success.withOpacity(0.4),
+                          color: AppColors.success.withValues(alpha: 0.4),
                         ),
                       ),
                       child: Row(
@@ -201,7 +201,7 @@ class _StartTripScreenState extends ConsumerState<StartTripScreen>
       decoration: BoxDecoration(
         color: AppColors.warningLight,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.warning.withOpacity(0.3)),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

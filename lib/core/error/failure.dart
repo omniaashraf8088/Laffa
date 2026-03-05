@@ -32,3 +32,21 @@ class UnauthorizedFailure extends Failure {
     super.code,
   });
 }
+
+class TenantFailure extends Failure {
+  const TenantFailure({super.message = 'Tenant operation failed', super.code});
+}
+
+class SubscriptionFailure extends Failure {
+  const SubscriptionFailure({
+    super.message = 'Subscription expired or inactive',
+    super.code,
+  });
+}
+
+class ForbiddenFailure extends Failure {
+  const ForbiddenFailure({
+    super.message = 'Insufficient permissions',
+    super.code,
+  });
+}

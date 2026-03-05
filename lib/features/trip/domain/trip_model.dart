@@ -14,6 +14,7 @@ class Trip {
   final double distanceKm;
   final double cost;
   final TripStatus status;
+  final String? companyId;
 
   const Trip({
     required this.id,
@@ -27,6 +28,7 @@ class Trip {
     this.distanceKm = 0.0,
     this.cost = 0.0,
     this.status = TripStatus.active,
+    this.companyId,
   });
 
   /// Returns the trip duration. If still active, calculates from now.
@@ -67,6 +69,46 @@ class Trip {
       distanceKm: distanceKm ?? this.distanceKm,
       cost: cost ?? this.cost,
       status: status ?? this.status,
+      companyId: companyId,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'bikeId': bikeId,
+      'bikeName': bikeName,
+      'bikeType': bikeType,
+      'startStation': startStation,
+      'endStation': endStation,
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime?.toIso8601String(),
+      'distanceKm': distanceKm,
+      'cost': cost,
+      'status': status.name,
+      'companyId': companyId,
+    };
+  }
+
+  factory Trip.fromJson(Map<String, dynamic> json) {
+    return Trip(
+      id: json['id'] as String,
+      bikeId: json['bikeId'] as String,
+      bikeName: json['bikeName'] as String,
+      bikeType: json['bikeType'] as String,
+      startStation: json['startStation'] as String,
+      endStation: json['endStation'] as String?,
+      startTime: DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] != null
+          ? DateTime.parse(json['endTime'] as String)
+          : null,
+      distanceKm: (json['distanceKm'] as num?)?.toDouble() ?? 0.0,
+      cost: (json['cost'] as num?)?.toDouble() ?? 0.0,
+      status: TripStatus.values.firstWhere(
+        (e) => e.name == json['status'],
+        orElse: () => TripStatus.active,
+      ),
+      companyId: json['companyId'] as String?,
     );
   }
 

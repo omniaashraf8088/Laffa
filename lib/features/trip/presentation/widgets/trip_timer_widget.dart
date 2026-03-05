@@ -38,7 +38,7 @@ class TripTimerWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(isLarge ? 24 : 16),
             boxShadow: [
               BoxShadow(
-                color: AppColors.tripTimerBackground.withOpacity(0.3),
+                color: AppColors.tripTimerBackground.withValues(alpha: 0.3),
                 blurRadius: 16,
                 offset: const Offset(0, 6),
               ),
@@ -52,7 +52,7 @@ class TripTimerWidget extends StatelessWidget {
                 style: AppFonts.style(
                   isArabic: isArabic,
                   fontSize: isLarge ? AppFonts.sizeBody : AppFonts.sizeSmall,
-                  color: AppColors.white.withOpacity(0.7),
+                  color: AppColors.white.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 4),

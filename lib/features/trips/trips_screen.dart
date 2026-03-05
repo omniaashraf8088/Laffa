@@ -213,7 +213,7 @@ class _TripsScreenState extends ConsumerState<TripsScreen> {
           : ListView.separated(
               padding: const EdgeInsets.all(20),
               itemCount: _trips.length,
-              separatorBuilder: (_, _2) => const SizedBox(height: 12),
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final trip = _trips[index];
                 return Dismissible(

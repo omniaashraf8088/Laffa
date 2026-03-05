@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 class Rating {
   final String id;
+  final String companyId;
   final String tripId;
   final int stars; // 1 to 5
   final String? comment;
@@ -12,6 +13,7 @@ class Rating {
 
   const Rating({
     required this.id,
+    required this.companyId,
     required this.tripId,
     required this.stars,
     this.comment,
@@ -19,8 +21,35 @@ class Rating {
     this.tags = const [],
   });
 
+  factory Rating.fromJson(Map<String, dynamic> json) {
+    return Rating(
+      id: json['id'] as String,
+      companyId: json['companyId'] as String,
+      tripId: json['tripId'] as String,
+      stars: json['stars'] as int,
+      comment: json['comment'] as String?,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+          const [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'companyId': companyId,
+      'tripId': tripId,
+      'stars': stars,
+      'comment': comment,
+      'createdAt': createdAt.toIso8601String(),
+      'tags': tags,
+    };
+  }
+
   @override
-  String toString() => 'Rating(id: $id, tripId: $tripId, stars: $stars)';
+  String toString() =>
+      'Rating(id: $id, companyId: $companyId, tripId: $tripId, stars: $stars)';
 }
 
 /// Predefined feedback tags users can select when rating.

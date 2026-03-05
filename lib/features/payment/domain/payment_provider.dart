@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/di/injection_container.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/tenant/tenant_service.dart';
 import '../data/payment_repository.dart';
 import '../domain/payment_model.dart';
 
@@ -73,8 +76,16 @@ class PaymentState {
 /// Notifier that manages payment state and business logic.
 class PaymentNotifier extends StateNotifier<PaymentState> {
   final PaymentRepository _repository;
+  final Ref _ref;
 
-  PaymentNotifier(this._repository) : super(const PaymentState());
+  PaymentNotifier(this._repository, this._ref) : super(const PaymentState());
+
+  String get _companyId => _ref.read(tenantProvider).activeCompany?.id ?? '';
+
+  String get _userId => _ref.read(tenantProvider).currentUser?.id ?? '';
+
+  String get _currency =>
+      _ref.read(tenantProvider).activeCompany?.pricing.currency ?? 'EGP';
 
   /// Initializes payment with booking details and loads payment methods.
   Future<void> initialize({
@@ -88,13 +99,17 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
     );
 
     try {
-      final methods = await _repository.getPaymentMethods();
+      final methods = await _repository.getPaymentMethods(
+        companyId: _companyId,
+        userId: _userId,
+      );
       // Auto-select the default payment method
       final defaultMethod = methods.where((m) => m.isDefault).firstOrNull;
 
       state = state.copyWith(
         paymentMethods: methods,
-        selectedMethod: defaultMethod ?? (methods.isNotEmpty ? methods.first : null),
+        selectedMethod:
+            defaultMethod ?? (methods.isNotEmpty ? methods.first : null),
         isLoading: false,
         error: null,
       );
@@ -163,9 +178,11 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
 
     try {
       final payment = await _repository.processPayment(
+        companyId: _companyId,
         bookingId: state.bookingId!,
         amount: state.amount,
         paymentMethodId: state.selectedMethod!.id,
+        currency: _currency,
       );
 
       state = state.copyWith(
@@ -175,10 +192,7 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
         error: null,
       );
     } catch (e) {
-      state = state.copyWith(
-        isProcessing: false,
-        error: 'Payment failed: $e',
-      );
+      state = state.copyWith(isProcessing: false, error: 'Payment failed: $e');
     }
   }
 
@@ -195,12 +209,13 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
 
 /// Provider for payment repository.
 final paymentRepositoryProvider = Provider<PaymentRepository>((ref) {
-  return PaymentRepository();
+  return PaymentRepository(apiClient: sl<ApiClient>());
 });
 
 /// Provider for payment state management.
-final paymentProvider =
-    StateNotifierProvider<PaymentNotifier, PaymentState>((ref) {
+final paymentProvider = StateNotifierProvider<PaymentNotifier, PaymentState>((
+  ref,
+) {
   final repository = ref.watch(paymentRepositoryProvider);
-  return PaymentNotifier(repository);
+  return PaymentNotifier(repository, ref);
 });

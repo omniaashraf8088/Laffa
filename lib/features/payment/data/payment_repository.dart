@@ -1,49 +1,49 @@
+import '../../../core/network/api_client.dart';
 import '../domain/payment_model.dart';
 
 /// Repository responsible for payment-related data operations.
-/// Currently uses mock data; replace with real payment gateway in production.
+/// All operations are scoped to a companyId for multi-tenant isolation.
 class PaymentRepository {
-  /// Fetches saved payment methods for the current user.
-  Future<List<PaymentMethod>> getPaymentMethods() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+  final ApiClient _apiClient;
 
-    return const [
-      PaymentMethod(
-        id: 'pm_1',
-        type: 'card',
-        label: 'Visa',
-        lastFourDigits: '4242',
-        isDefault: true,
-      ),
-      PaymentMethod(
-        id: 'pm_2',
-        type: 'card',
-        label: 'Mastercard',
-        lastFourDigits: '8888',
-      ),
-      PaymentMethod(id: 'pm_3', type: 'wallet', label: 'Digital Wallet'),
-      PaymentMethod(id: 'pm_4', type: 'cash', label: 'Cash on Delivery'),
-    ];
+  PaymentRepository({required ApiClient apiClient}) : _apiClient = apiClient;
+
+  /// Fetches saved payment methods for the current user.
+  Future<List<PaymentMethod>> getPaymentMethods({
+    required String companyId,
+    required String userId,
+  }) async {
+    try {
+      final response = await _apiClient.get(
+        '/companies/$companyId/users/$userId/payment-methods',
+      );
+      final list = response['data'] as List<dynamic>? ?? [];
+      return list
+          .map((e) => PaymentMethod.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (_) {
+      return [];
+    }
   }
 
-  /// Processes a payment for a booking.
+  /// Processes a payment for a booking within a company.
   Future<Payment> processPayment({
+    required String companyId,
     required String bookingId,
     required double amount,
     required String paymentMethodId,
+    required String currency,
   }) async {
-    // Simulate payment processing delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    return Payment(
-      id: 'pay_${DateTime.now().millisecondsSinceEpoch}',
-      bookingId: bookingId,
-      amount: amount,
-      paymentMethodId: paymentMethodId,
-      createdAt: DateTime.now(),
-      status: PaymentStatus.completed,
-      transactionRef: 'TXN${DateTime.now().millisecondsSinceEpoch}',
+    final response = await _apiClient.post(
+      '/companies/$companyId/payments',
+      body: {
+        'bookingId': bookingId,
+        'amount': amount,
+        'paymentMethodId': paymentMethodId,
+        'currency': currency,
+      },
     );
+    return Payment.fromJson(response);
   }
 
   /// Validates a card number (basic Luhn check simulation).

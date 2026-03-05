@@ -27,6 +27,15 @@ class ErrorHandler {
     if (exception is UnauthorizedException) {
       return const UnauthorizedFailure();
     }
+    if (exception is TenantException) {
+      return TenantFailure(message: exception.message);
+    }
+    if (exception is SubscriptionException) {
+      return SubscriptionFailure(message: exception.message);
+    }
+    if (exception is ForbiddenException) {
+      return ForbiddenFailure(message: exception.message);
+    }
 
     return ServerFailure(message: exception.toString());
   }
@@ -43,6 +52,12 @@ class ErrorHandler {
         return failure.message;
       case UnauthorizedFailure():
         return 'Session expired. Please sign in again.';
+      case TenantFailure():
+        return failure.message;
+      case SubscriptionFailure():
+        return 'Your subscription has expired. Please renew to continue.';
+      case ForbiddenFailure():
+        return 'You do not have permission to perform this action.';
       default:
         return 'An unexpected error occurred.';
     }

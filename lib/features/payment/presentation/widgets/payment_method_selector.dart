@@ -54,7 +54,7 @@ class PaymentMethodSelector extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withOpacity(0.06)
+              ? AppColors.primary.withValues(alpha: 0.06)
               : AppColors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
@@ -69,7 +69,7 @@ class PaymentMethodSelector extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: _getMethodColor(method.type).withOpacity(0.1),
+                color: _getMethodColor(method.type).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(

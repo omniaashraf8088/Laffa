@@ -36,7 +36,7 @@ class BikeCard extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.15),
+                    color: AppColors.primary.withValues(alpha: 0.15),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -128,15 +128,15 @@ class BikeCard extends StatelessWidget {
     switch (bike.type) {
       case 'electric':
         icon = Icons.electric_bike_rounded;
-        bgColor = AppColors.info.withOpacity(0.1);
+        bgColor = AppColors.info.withValues(alpha: 0.1);
         break;
       case 'premium':
         icon = Icons.pedal_bike_rounded;
-        bgColor = AppColors.warning.withOpacity(0.1);
+        bgColor = AppColors.warning.withValues(alpha: 0.1);
         break;
       default:
         icon = Icons.directions_bike_rounded;
-        bgColor = AppColors.primary.withOpacity(0.1);
+        bgColor = AppColors.primary.withValues(alpha: 0.1);
     }
 
     return Container(
@@ -155,7 +155,7 @@ class BikeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withOpacity(0.2),
+        color: AppColors.secondary.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(

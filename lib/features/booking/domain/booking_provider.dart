@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/di/injection_container.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/tenant/tenant_service.dart';
 import '../data/booking_repository.dart';
 import '../domain/booking_model.dart';
 
@@ -49,12 +52,20 @@ class BookingState {
 }
 
 /// Notifier that manages booking state and business logic.
+/// All operations are scoped to the active company.
 class BookingNotifier extends StateNotifier<BookingState> {
   final BookingRepository _repository;
+  final Ref _ref;
 
-  BookingNotifier(this._repository) : super(const BookingState());
+  BookingNotifier(this._repository, this._ref) : super(const BookingState());
 
-  /// Loads available bikes for a station.
+  String get _companyId {
+    final id = _ref.read(tenantProvider).activeCompanyId;
+    if (id == null) throw StateError('No active company');
+    return id;
+  }
+
+  /// Loads available bikes for a station (scoped to active company).
   Future<void> loadBikes({
     required String stationId,
     required String stationName,
@@ -66,7 +77,10 @@ class BookingNotifier extends StateNotifier<BookingState> {
     );
 
     try {
-      final bikes = await _repository.getAvailableBikes(stationId);
+      final bikes = await _repository.getAvailableBikes(
+        companyId: _companyId,
+        stationId: stationId,
+      );
       state = state.copyWith(
         availableBikes: bikes,
         isLoading: false,
@@ -91,6 +105,7 @@ class BookingNotifier extends StateNotifier<BookingState> {
   }
 
   /// Confirms the booking for the selected bike.
+  /// Uses company pricing for cost calculation.
   Future<void> confirmBooking() async {
     final bike = state.selectedBike;
     if (bike == null) {
@@ -98,16 +113,31 @@ class BookingNotifier extends StateNotifier<BookingState> {
       return;
     }
 
+    // Check subscription
+    final tenantState = _ref.read(tenantProvider);
+    if (!tenantState.canCreateRides) {
+      state = state.copyWith(
+        error: 'Rides are currently disabled for this company',
+      );
+      return;
+    }
+
+    final pricing = tenantState.activeCompany?.pricing;
+    final pricePerMinute = pricing?.pricePerMinute ?? bike.pricePerMinute;
+    final unlockFee = pricing?.unlockFee ?? 0.0;
+
     state = state.copyWith(isLoading: true);
 
     try {
       final booking = await _repository.createBooking(
+        companyId: _companyId,
         bikeId: bike.id,
         bikeName: bike.name,
         bikeType: bike.type,
         stationName: state.stationName ?? 'Unknown Station',
-        pricePerMinute: bike.pricePerMinute,
+        pricePerMinute: pricePerMinute,
         estimatedMinutes: state.estimatedMinutes,
+        unlockFee: unlockFee,
       );
 
       state = state.copyWith(
@@ -131,7 +161,10 @@ class BookingNotifier extends StateNotifier<BookingState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      await _repository.cancelBooking(booking.id);
+      await _repository.cancelBooking(
+        companyId: _companyId,
+        bookingId: booking.id,
+      );
       state = const BookingState();
     } catch (e) {
       state = state.copyWith(
@@ -154,12 +187,13 @@ class BookingNotifier extends StateNotifier<BookingState> {
 
 /// Provider for booking repository.
 final bookingRepositoryProvider = Provider<BookingRepository>((ref) {
-  return BookingRepository();
+  return BookingRepository(apiClient: sl<ApiClient>());
 });
 
 /// Provider for booking state management.
-final bookingProvider =
-    StateNotifierProvider<BookingNotifier, BookingState>((ref) {
+final bookingProvider = StateNotifierProvider<BookingNotifier, BookingState>((
+  ref,
+) {
   final repository = ref.watch(bookingRepositoryProvider);
-  return BookingNotifier(repository);
+  return BookingNotifier(repository, ref);
 });

@@ -33,7 +33,7 @@ class FeedbackTagsWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.primary.withOpacity(0.1)
+                  ? AppColors.primary.withValues(alpha: 0.1)
                   : AppColors.white,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(

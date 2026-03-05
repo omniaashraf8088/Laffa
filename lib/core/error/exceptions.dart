@@ -43,3 +43,30 @@ class UnauthorizedException implements Exception {
   @override
   String toString() => 'UnauthorizedException: $message';
 }
+
+class TenantException implements Exception {
+  final String message;
+
+  const TenantException({this.message = 'Tenant error'});
+
+  @override
+  String toString() => 'TenantException: $message';
+}
+
+class SubscriptionException implements Exception {
+  final String message;
+
+  const SubscriptionException({this.message = 'Subscription error'});
+
+  @override
+  String toString() => 'SubscriptionException: $message';
+}
+
+class ForbiddenException implements Exception {
+  final String message;
+
+  const ForbiddenException({this.message = 'Forbidden'});
+
+  @override
+  String toString() => 'ForbiddenException: $message';
+}

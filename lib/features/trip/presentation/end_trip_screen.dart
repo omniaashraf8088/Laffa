@@ -78,7 +78,7 @@ class EndTripScreen extends ConsumerWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.success.withOpacity(0.2),
+                            color: AppColors.success.withValues(alpha: 0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 6),
                           ),
@@ -207,7 +207,7 @@ class EndTripScreen extends ConsumerWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: color, size: 18),

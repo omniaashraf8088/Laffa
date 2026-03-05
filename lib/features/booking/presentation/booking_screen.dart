@@ -180,7 +180,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.08),
+        color: AppColors.primary.withValues(alpha: 0.08),
         border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: Row(
@@ -285,7 +285,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       decoration: BoxDecoration(
         color: AppColors.errorLight,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.error.withOpacity(0.3)),
+        border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [

@@ -1,83 +1,83 @@
+import '../../../core/network/api_client.dart';
 import '../domain/booking_model.dart';
 
 /// Repository responsible for booking-related data operations.
-/// Currently uses mock data; replace with real API calls in production.
+/// All operations are scoped to a companyId for multi-tenant isolation.
 class BookingRepository {
-  /// Fetches available bikes for a given station.
-  Future<List<Bike>> getAvailableBikes(String stationId) async {
-    // Simulate API delay
-    await Future.delayed(const Duration(milliseconds: 800));
+  final ApiClient _apiClient;
 
-    return _mockBikes;
+  BookingRepository({required ApiClient apiClient}) : _apiClient = apiClient;
+
+  /// Fetches available bikes for a given station within a company.
+  Future<List<Bike>> getAvailableBikes({
+    required String companyId,
+    required String stationId,
+  }) async {
+    try {
+      final response = await _apiClient.get(
+        '/companies/$companyId/stations/$stationId/bikes',
+      );
+      final list = response['data'] as List<dynamic>? ?? [];
+      return list.map((e) => Bike.fromJson(e as Map<String, dynamic>)).toList();
+    } catch (_) {
+      return [];
+    }
   }
 
-  /// Creates a new booking for the selected bike.
+  /// Creates a new booking scoped to a company.
   Future<Booking> createBooking({
+    required String companyId,
     required String bikeId,
     required String bikeName,
     required String bikeType,
     required String stationName,
     required double pricePerMinute,
     required int estimatedMinutes,
+    required double unlockFee,
   }) async {
-    // Simulate API delay
-    await Future.delayed(const Duration(seconds: 1));
-
-    return Booking(
-      id: 'bk_${DateTime.now().millisecondsSinceEpoch}',
-      bikeId: bikeId,
-      bikeName: bikeName,
-      bikeType: bikeType,
-      stationName: stationName,
-      pricePerMinute: pricePerMinute,
-      createdAt: DateTime.now(),
-      status: BookingStatus.confirmed,
-      estimatedMinutes: estimatedMinutes,
+    final response = await _apiClient.post(
+      '/companies/$companyId/bookings',
+      body: {
+        'bikeId': bikeId,
+        'bikeName': bikeName,
+        'bikeType': bikeType,
+        'stationName': stationName,
+        'pricePerMinute': pricePerMinute,
+        'estimatedMinutes': estimatedMinutes,
+        'unlockFee': unlockFee,
+      },
     );
+    return Booking.fromJson(response);
   }
 
-  /// Cancels an existing booking.
-  Future<bool> cancelBooking(String bookingId) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
+  /// Cancels an existing booking within a company.
+  Future<bool> cancelBooking({
+    required String companyId,
+    required String bookingId,
+  }) async {
+    try {
+      await _apiClient.delete('/companies/$companyId/bookings/$bookingId');
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Fetches booking history for a user within a company.
+  Future<List<Booking>> getBookingHistory({
+    required String companyId,
+    required String userId,
+  }) async {
+    try {
+      final response = await _apiClient.get(
+        '/companies/$companyId/users/$userId/bookings',
+      );
+      final list = response['data'] as List<dynamic>? ?? [];
+      return list
+          .map((e) => Booking.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (_) {
+      return [];
+    }
   }
 }
-
-/// Mock bikes data for development.
-const List<Bike> _mockBikes = [
-  Bike(
-    id: 'bike_1',
-    name: 'City Cruiser',
-    type: 'standard',
-    pricePerMinute: 2.5,
-    batteryLevel: 1.0,
-  ),
-  Bike(
-    id: 'bike_2',
-    name: 'E-Rider Pro',
-    type: 'electric',
-    pricePerMinute: 4.0,
-    batteryLevel: 0.85,
-  ),
-  Bike(
-    id: 'bike_3',
-    name: 'Urban Swift',
-    type: 'electric',
-    pricePerMinute: 3.5,
-    batteryLevel: 0.62,
-  ),
-  Bike(
-    id: 'bike_4',
-    name: 'Latte Express',
-    type: 'premium',
-    pricePerMinute: 5.0,
-    batteryLevel: 0.95,
-  ),
-  Bike(
-    id: 'bike_5',
-    name: 'Eco Glide',
-    type: 'standard',
-    pricePerMinute: 2.0,
-    batteryLevel: 1.0,
-  ),
-];

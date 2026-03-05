@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/di/injection_container.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/tenant/tenant_service.dart';
 import '../data/rating_repository.dart';
-import '../domain/rating_model.dart';
+import 'rating_model.dart';
 
 /// State for the rating feature.
 class RatingState {
@@ -49,10 +52,14 @@ class RatingState {
 }
 
 /// Notifier that manages rating state and business logic.
+/// All operations are scoped to the active company via TenantState.
 class RatingNotifier extends StateNotifier<RatingState> {
   final RatingRepository _repository;
+  final Ref _ref;
 
-  RatingNotifier(this._repository) : super(const RatingState());
+  RatingNotifier(this._repository, this._ref) : super(const RatingState());
+
+  String get _companyId => _ref.read(activeCompanyIdProvider);
 
   /// Initializes the rating screen with the trip ID.
   void initialize(String tripId) {
@@ -80,7 +87,7 @@ class RatingNotifier extends StateNotifier<RatingState> {
     state = state.copyWith(selectedTags: tags);
   }
 
-  /// Submits the rating.
+  /// Submits the rating scoped to the active company.
   Future<void> submitRating() async {
     if (state.stars == 0) {
       state = state.copyWith(error: 'Please select a rating');
@@ -96,6 +103,7 @@ class RatingNotifier extends StateNotifier<RatingState> {
 
     try {
       final rating = await _repository.submitRating(
+        companyId: _companyId,
         tripId: state.tripId!,
         stars: state.stars,
         comment: state.comment.isNotEmpty ? state.comment : null,
@@ -129,7 +137,7 @@ class RatingNotifier extends StateNotifier<RatingState> {
 
 /// Provider for rating repository.
 final ratingRepositoryProvider = Provider<RatingRepository>((ref) {
-  return RatingRepository();
+  return RatingRepository(apiClient: sl<ApiClient>());
 });
 
 /// Provider for rating state management.
@@ -137,5 +145,5 @@ final ratingProvider = StateNotifierProvider<RatingNotifier, RatingState>((
   ref,
 ) {
   final repository = ref.watch(ratingRepositoryProvider);
-  return RatingNotifier(repository);
+  return RatingNotifier(repository, ref);
 });

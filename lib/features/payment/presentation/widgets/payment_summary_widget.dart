@@ -29,7 +29,7 @@ class PaymentSummaryWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -42,7 +42,7 @@ class PaymentSummaryWidget extends StatelessWidget {
             style: AppFonts.style(
               isArabic: isArabic,
               fontSize: AppFonts.sizeBody,
-              color: AppColors.white.withOpacity(0.8),
+              color: AppColors.white.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),
@@ -59,7 +59,7 @@ class PaymentSummaryWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -67,7 +67,7 @@ class PaymentSummaryWidget extends StatelessWidget {
               style: AppFonts.style(
                 isArabic: isArabic,
                 fontSize: AppFonts.sizeXSmall,
-                color: AppColors.white.withOpacity(0.9),
+                color: AppColors.white.withValues(alpha: 0.9),
               ),
             ),
           ),

@@ -10,6 +10,7 @@ class Bike {
   final double batteryLevel; // 0.0 to 1.0 for electric bikes
   final bool isAvailable;
   final String? imageUrl;
+  final String? companyId;
 
   const Bike({
     required this.id,
@@ -19,6 +20,7 @@ class Bike {
     this.batteryLevel = 1.0,
     this.isAvailable = true,
     this.imageUrl,
+    this.companyId,
   });
 
   /// Returns a display-friendly type name.
@@ -36,6 +38,32 @@ class Bike {
   /// Returns battery percentage as integer (0-100).
   int get batteryPercent => (batteryLevel * 100).round();
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'type': type,
+      'pricePerMinute': pricePerMinute,
+      'batteryLevel': batteryLevel,
+      'isAvailable': isAvailable,
+      'imageUrl': imageUrl,
+      'companyId': companyId,
+    };
+  }
+
+  factory Bike.fromJson(Map<String, dynamic> json) {
+    return Bike(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      pricePerMinute: (json['pricePerMinute'] as num).toDouble(),
+      batteryLevel: (json['batteryLevel'] as num?)?.toDouble() ?? 1.0,
+      isAvailable: json['isAvailable'] as bool? ?? true,
+      imageUrl: json['imageUrl'] as String?,
+      companyId: json['companyId'] as String?,
+    );
+  }
+
   @override
   String toString() => 'Bike(id: $id, name: $name, type: $type)';
 }
@@ -52,6 +80,8 @@ class Booking {
   final DateTime createdAt;
   final BookingStatus status;
   final int estimatedMinutes;
+  final String? companyId;
+  final double unlockFee;
 
   const Booking({
     required this.id,
@@ -63,10 +93,47 @@ class Booking {
     required this.createdAt,
     this.status = BookingStatus.pending,
     this.estimatedMinutes = 30,
+    this.companyId,
+    this.unlockFee = 0.0,
   });
 
-  /// Calculates the estimated total cost.
-  double get estimatedCost => pricePerMinute * estimatedMinutes;
+  /// Calculates the estimated total cost (unlock fee + ride cost).
+  double get estimatedCost => unlockFee + (pricePerMinute * estimatedMinutes);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'bikeId': bikeId,
+      'bikeName': bikeName,
+      'bikeType': bikeType,
+      'stationName': stationName,
+      'pricePerMinute': pricePerMinute,
+      'createdAt': createdAt.toIso8601String(),
+      'status': status.name,
+      'estimatedMinutes': estimatedMinutes,
+      'companyId': companyId,
+      'unlockFee': unlockFee,
+    };
+  }
+
+  factory Booking.fromJson(Map<String, dynamic> json) {
+    return Booking(
+      id: json['id'] as String,
+      bikeId: json['bikeId'] as String,
+      bikeName: json['bikeName'] as String,
+      bikeType: json['bikeType'] as String,
+      stationName: json['stationName'] as String,
+      pricePerMinute: (json['pricePerMinute'] as num).toDouble(),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      status: BookingStatus.values.firstWhere(
+        (e) => e.name == json['status'],
+        orElse: () => BookingStatus.pending,
+      ),
+      estimatedMinutes: json['estimatedMinutes'] as int? ?? 30,
+      companyId: json['companyId'] as String?,
+      unlockFee: (json['unlockFee'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
 
   @override
   String toString() => 'Booking(id: $id, bike: $bikeName, status: $status)';
