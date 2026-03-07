@@ -135,9 +135,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           // Page counter top-center
           _buildPageCounter(isSmallScreen),
 
-          // Swipe hint on first page
-          if (_currentPage == 0) _buildSwipeHint(isArabic, size),
-
           // Bottom panel
           _buildBottomPanel(isArabic, isSmallScreen),
         ],
@@ -319,61 +316,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  // ── Swipe hint on first page ──
-  Widget _buildSwipeHint(bool isArabic, Size screenSize) {
-    return Positioned(
-      bottom: 210,
-      left: 0,
-      right: 0,
-      child: AnimatedBuilder(
-        animation: _swipeHintCtrl,
-        builder: (context, _) {
-          final t = _swipeHintCtrl.value;
-          final bounce = math.sin(t * math.pi) * 8;
-          final opacity = (0.3 + 0.4 * math.sin(t * math.pi)).clamp(0.0, 1.0);
-
-          return Opacity(
-            opacity: opacity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Transform.translate(
-                  offset: Offset(isArabic ? bounce : -bounce, 0),
-                  child: Icon(
-                    isArabic
-                        ? Icons.chevron_left_rounded
-                        : Icons.chevron_right_rounded,
-                    size: 28,
-                    color: AppColors.primary.withValues(alpha: 0.4),
-                  ),
-                ),
-                Text(
-                  isArabic ? 'اسحب للمتابعة' : 'Swipe to continue',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary.withValues(alpha: 0.6),
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                Transform.translate(
-                  offset: Offset(isArabic ? bounce : -bounce, 0),
-                  child: Icon(
-                    isArabic
-                        ? Icons.chevron_left_rounded
-                        : Icons.chevron_right_rounded,
-                    size: 28,
-                    color: AppColors.primary.withValues(alpha: 0.4),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

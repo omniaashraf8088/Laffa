@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants/colors.dart';
+import '../../core/localization/app_strings_ar.dart';
+import '../../core/localization/app_strings_en.dart';
+import '../../core/localization/localization_provider.dart';
 import '../../core/router/app_router.dart';
 import '../../core/tenant/models/company_model.dart';
-import '../../core/tenant/models/user_role.dart';
 import '../../core/tenant/tenant_service.dart';
 
 /// Screen displayed when a user needs to select which company
@@ -19,10 +21,14 @@ class CompanySelectionScreen extends ConsumerWidget {
     final tenantState = ref.watch(tenantProvider);
     final companies = tenantState.availableCompanies;
     final isLoading = tenantState.isLoading;
+    final localization = ref.watch(localizationProvider);
+    final isArabic = localization.language == AppLanguage.ar;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Company'),
+        title: Text(
+          isArabic ? AppStringsAr.selectCompany : AppStringsEn.selectCompany,
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -36,12 +42,12 @@ class CompanySelectionScreen extends ConsumerWidget {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : companies.isEmpty
-          ? _buildEmptyState(context)
-          : _buildCompanyList(context, ref, companies),
+          ? _buildEmptyState(context, isArabic)
+          : _buildCompanyList(context, ref, companies, isArabic),
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context, bool isArabic) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -55,13 +61,17 @@ class CompanySelectionScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'No Companies Available',
+              isArabic
+                  ? AppStringsAr.noCompaniesAvailable
+                  : AppStringsEn.noCompaniesAvailable,
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
-              'There are no active companies in your area yet. Please check back later.',
+              isArabic
+                  ? AppStringsAr.noCompaniesDesc
+                  : AppStringsEn.noCompaniesDesc,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -77,6 +87,7 @@ class CompanySelectionScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     List<Company> companies,
+    bool isArabic,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,14 +98,18 @@ class CompanySelectionScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Choose Your Ride Provider',
+                isArabic
+                    ? AppStringsAr.chooseRideProvider
+                    : AppStringsEn.chooseRideProvider,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Select the scooter company you want to ride with',
+                isArabic
+                    ? AppStringsAr.selectScooterCompany
+                    : AppStringsEn.selectScooterCompany,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -125,6 +140,8 @@ class _CompanyCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tenantState = ref.watch(tenantProvider);
     final isSelected = tenantState.activeCompanyId == company.id;
+    final localization = ref.watch(localizationProvider);
+    final isArabic = localization.language == AppLanguage.ar;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -193,7 +210,9 @@ class _CompanyCard extends ConsumerWidget {
                         Text(
                           company.cities.isNotEmpty
                               ? company.cities.join(', ')
-                              : 'Multiple cities',
+                              : isArabic
+                              ? AppStringsAr.multipleCities
+                              : AppStringsEn.multipleCities,
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: Theme.of(
@@ -236,14 +255,6 @@ class _CompanyCard extends ConsumerWidget {
 
     if (!context.mounted) return;
 
-    final role = ref.read(tenantProvider).role;
-    switch (role) {
-      case UserRole.superAdmin:
-        context.go(AppRouter.superAdmin);
-      case UserRole.companyAdmin:
-        context.go(AppRouter.companyAdmin);
-      case UserRole.rider:
-        context.go(AppRouter.home);
-    }
+    context.go(AppRouter.home);
   }
 }

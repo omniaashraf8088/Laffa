@@ -18,9 +18,16 @@ import '../../features/payment/presentation/payment_screen.dart';
 import '../../features/trip/presentation/start_trip_screen.dart';
 import '../../features/trip/presentation/end_trip_screen.dart';
 import '../../features/rating/presentation/rating_screen.dart';
+import '../../features/ride/presentation/qr_unlock_screen.dart';
+import '../../features/ride/presentation/ride_tracking_screen.dart';
+import '../../features/ride/presentation/ride_payment_screen.dart';
+import '../../features/ride/presentation/ride_history_screen.dart';
+import '../../features/wallet/wallet_screen.dart';
+import '../../features/wallet/payment_methods_screen.dart';
+import '../../features/wallet/referral_screen.dart';
+import '../../features/saved_places/saved_places_screen.dart';
+import '../../features/safety_center/safety_center_screen.dart';
 import '../../features/company_selection/company_selection_screen.dart';
-import '../../features/admin_dashboard/super_admin/super_admin_dashboard_screen.dart';
-import '../../features/admin_dashboard/company_admin/company_admin_dashboard_screen.dart';
 import '../tenant/tenant_service.dart';
 import '../tenant/models/user_role.dart';
 
@@ -51,9 +58,20 @@ class AppRouter {
   static const String endTrip = '/end-trip';
   static const String rating = '/rating';
 
-  // ── Admin Routes ─────────────────────────────────
-  static const String superAdmin = '/super-admin';
-  static const String companyAdmin = '/company-admin';
+  // ── Wallet & Payment Routes ──────────────────────
+  static const String wallet = '/wallet';
+  static const String paymentMethods = '/payment-methods';
+  static const String referral = '/referral';
+
+  // ── Saved Places & Safety ───────────────────────
+  static const String savedPlaces = '/saved-places';
+  static const String safetyCenter = '/safety-center';
+
+  // ── Ride Feature Routes ──────────────────────────
+  static const String qrUnlock = '/qr-unlock';
+  static const String rideTracking = '/ride-tracking';
+  static const String ridePayment = '/ride-payment';
+  static const String rideHistory = '/ride-history';
 }
 
 // Provider for easy access to router
@@ -157,16 +175,46 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
 
-      // ── Super Admin Dashboard ─────────────────────
+      // ── Wallet & Payment ─────────────────────────
       GoRoute(
-        path: AppRouter.superAdmin,
-        builder: (context, state) => const SuperAdminDashboardScreen(),
+        path: AppRouter.wallet,
+        builder: (context, state) => const WalletScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.paymentMethods,
+        builder: (context, state) => const PaymentMethodsScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.referral,
+        builder: (context, state) => const ReferralScreen(),
       ),
 
-      // ── Company Admin Dashboard ───────────────────
+      // ── Ride Feature ──────────────────────────────
       GoRoute(
-        path: AppRouter.companyAdmin,
-        builder: (context, state) => const CompanyAdminDashboardScreen(),
+        path: AppRouter.qrUnlock,
+        builder: (context, state) => const QrUnlockScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.rideTracking,
+        builder: (context, state) => const RideTrackingScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.ridePayment,
+        builder: (context, state) => const RidePaymentScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.rideHistory,
+        builder: (context, state) => const RideHistoryScreen(),
+      ),
+
+      // ── Saved Places & Safety ─────────────────────
+      GoRoute(
+        path: AppRouter.savedPlaces,
+        builder: (context, state) => const SavedPlacesScreen(),
+      ),
+      GoRoute(
+        path: AppRouter.safetyCenter,
+        builder: (context, state) => const SafetyCenterScreen(),
       ),
     ],
 
@@ -195,21 +243,17 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       // Company selection is allowed for all authenticated users
       if (location == AppRouter.companySelect) return null;
 
-      // Super admin → only super admin routes
+      // Super admin → settings only
       if (role.isSuperAdmin) {
-        if (location.startsWith('/super-admin') || location == '/settings') {
-          return null;
-        }
-        return AppRouter.superAdmin;
+        if (location == '/settings') return null;
+        return AppRouter.home;
       }
 
       // Company admin
       if (role.isCompanyAdmin) {
         if (!hasCompany) return AppRouter.companySelect;
-        if (location.startsWith('/company-admin') || location == '/settings') {
-          return null;
-        }
-        return AppRouter.companyAdmin;
+        if (location == '/settings') return null;
+        return AppRouter.home;
       }
 
       // Rider
@@ -232,9 +276,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 String _homeRouteForRole(UserRole role, bool hasCompany) {
   switch (role) {
     case UserRole.superAdmin:
-      return AppRouter.superAdmin;
+      return AppRouter.home;
     case UserRole.companyAdmin:
-      return hasCompany ? AppRouter.companyAdmin : AppRouter.companySelect;
+      return hasCompany ? AppRouter.home : AppRouter.companySelect;
     case UserRole.rider:
       return AppRouter.home;
   }

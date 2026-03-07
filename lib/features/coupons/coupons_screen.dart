@@ -187,7 +187,7 @@ class CouponsScreen extends ConsumerWidget {
                   ),
                 ),
                 child: Text(
-                  isArabic ? 'تطبيق' : 'Apply',
+                  isArabic ? AppStringsAr.apply : AppStringsEn.apply,
                   style: AppFonts.label(
                     isArabic: isArabic,
                     color: AppColors.white,
@@ -265,8 +265,8 @@ class CouponsScreen extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Text(
                   isArabic
-                      ? 'ينتهي: ${coupon.expiryDate}'
-                      : 'Expires: ${coupon.expiryDate}',
+                      ? '${AppStringsAr.expires}: ${coupon.expiryDate}'
+                      : '${AppStringsEn.expires}: ${coupon.expiryDate}',
                   style: AppFonts.caption(
                     isArabic: isArabic,
                     color: AppColors.textTertiary,
@@ -285,8 +285,8 @@ class CouponsScreen extends ConsumerWidget {
             ),
             child: Text(
               coupon.isActive
-                  ? (isArabic ? 'نشط' : 'Active')
-                  : (isArabic ? 'منتهي' : 'Expired'),
+                  ? (isArabic ? AppStringsAr.active : AppStringsEn.active)
+                  : (isArabic ? AppStringsAr.expired : AppStringsEn.expired),
               style: AppFonts.caption(
                 isArabic: isArabic,
                 color: coupon.isActive

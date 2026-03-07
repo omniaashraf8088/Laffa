@@ -29,10 +29,9 @@ class RouteGuard {
       return _homeRouteForRole(role, hasCompany);
     }
 
-    // Super admin trying to access non-super-admin routes
+    // Super admin
     if (role.isSuperAdmin) {
-      if (_isSuperAdminRoute(location)) return null;
-      return '/super-admin';
+      return null;
     }
 
     // Company admin without company selected
@@ -42,7 +41,7 @@ class RouteGuard {
         return '/company-select';
       }
       if (_isCompanyAdminRoute(location)) return null;
-      return '/company-admin';
+      return '/home';
     }
 
     // Rider without company selected
@@ -61,9 +60,9 @@ class RouteGuard {
   String _homeRouteForRole(UserRole role, bool hasCompany) {
     switch (role) {
       case UserRole.superAdmin:
-        return '/super-admin';
+        return '/home';
       case UserRole.companyAdmin:
-        return hasCompany ? '/company-admin' : '/company-select';
+        return hasCompany ? '/home' : '/company-select';
       case UserRole.rider:
         return hasCompany ? '/home' : '/company-select';
     }
@@ -80,14 +79,10 @@ class RouteGuard {
     return publicRoutes.contains(location);
   }
 
-  bool _isSuperAdminRoute(String location) {
-    return location.startsWith('/super-admin');
-  }
-
   bool _isCompanyAdminRoute(String location) {
-    return location.startsWith('/company-admin') ||
-        location == '/company-select' ||
-        location == '/settings';
+    return location == '/company-select' ||
+        location == '/settings' ||
+        location == '/home';
   }
 
   bool _isRiderRoute(String location) {

@@ -41,6 +41,8 @@ class ProfileScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             _buildStatsRow(isArabic),
             const SizedBox(height: 20),
+            _buildServicesGrid(context, isArabic),
+            const SizedBox(height: 20),
             _buildMenuSection(context, ref, isArabic),
             const SizedBox(height: 20),
           ],
@@ -89,7 +91,10 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            user?.name ?? (isArabic ? 'مستخدم Laffa' : 'Laffa User'),
+            user?.name ??
+                (isArabic
+                    ? AppStringsAr.defaultUser
+                    : AppStringsEn.defaultUser),
             style: AppFonts.heading(isArabic: isArabic, color: AppColors.white),
           ),
           const SizedBox(height: 4),
@@ -131,7 +136,7 @@ class ProfileScreen extends ConsumerWidget {
             child: _buildStatCard(
               icon: Icons.electric_scooter_rounded,
               value: '24',
-              label: isArabic ? 'رحلة' : 'Rides',
+              label: isArabic ? AppStringsAr.rides : AppStringsEn.rides,
               color: AppColors.primary,
               isArabic: isArabic,
             ),
@@ -141,7 +146,9 @@ class ProfileScreen extends ConsumerWidget {
             child: _buildStatCard(
               icon: Icons.straighten_rounded,
               value: '87.5',
-              label: isArabic ? 'كم' : 'km',
+              label: isArabic
+                  ? AppStringsAr.kilometers
+                  : AppStringsEn.kilometers,
               color: AppColors.success,
               isArabic: isArabic,
             ),
@@ -151,7 +158,7 @@ class ProfileScreen extends ConsumerWidget {
             child: _buildStatCard(
               icon: Icons.timer_rounded,
               value: '12.3',
-              label: isArabic ? 'ساعة' : 'hrs',
+              label: isArabic ? AppStringsAr.hours : AppStringsEn.hours,
               color: AppColors.info,
               isArabic: isArabic,
             ),
@@ -216,6 +223,149 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
+  Widget _buildServicesGrid(BuildContext context, bool isArabic) {
+    final services = [
+      _ServiceItem(
+        Icons.electric_scooter_rounded,
+        isArabic ? AppStringsAr.myRides : AppStringsEn.myRides,
+        '/ride-history',
+        AppColors.primary,
+      ),
+      _ServiceItem(
+        Icons.payment_rounded,
+        isArabic ? AppStringsAr.payments : AppStringsEn.payments,
+        '/payment-methods',
+        AppColors.info,
+      ),
+      _ServiceItem(
+        Icons.card_giftcard_rounded,
+        isArabic ? AppStringsAr.coupons : AppStringsEn.coupons,
+        '/coupons',
+        AppColors.warning,
+      ),
+      _ServiceItem(
+        Icons.location_on_rounded,
+        isArabic ? AppStringsAr.savedPlaces : AppStringsEn.savedPlaces,
+        '/saved-places',
+        AppColors.success,
+      ),
+      _ServiceItem(
+        Icons.notifications_rounded,
+        isArabic ? AppStringsAr.notifications : AppStringsEn.notifications,
+        '',
+        AppColors.secondary,
+      ),
+      _ServiceItem(
+        Icons.support_agent_rounded,
+        isArabic ? AppStringsAr.support : AppStringsEn.support,
+        '/chat',
+        AppColors.accent,
+      ),
+      _ServiceItem(
+        Icons.settings_rounded,
+        isArabic ? AppStringsAr.settings : AppStringsEn.settings,
+        '/settings',
+        AppColors.greyDark,
+      ),
+      _ServiceItem(
+        Icons.star_rounded,
+        isArabic ? AppStringsAr.rateRide : AppStringsEn.rateRide,
+        '',
+        AppColors.ratingStar,
+      ),
+      _ServiceItem(
+        Icons.shield_rounded,
+        isArabic ? AppStringsAr.safetyCenter : AppStringsEn.safetyCenter,
+        '/safety-center',
+        AppColors.error,
+      ),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isArabic ? AppStringsAr.services : AppStringsEn.services,
+            style: AppFonts.style(
+              isArabic: isArabic,
+              fontSize: AppFonts.sizeMedium,
+              fontWeight: AppFonts.bold,
+              color: AppColors.text,
+            ),
+          ),
+          const SizedBox(height: 12),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.0,
+            ),
+            itemCount: services.length,
+            itemBuilder: (context, index) {
+              final service = services[index];
+              return _buildServiceTile(context, service, isArabic);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildServiceTile(
+    BuildContext context,
+    _ServiceItem service,
+    bool isArabic,
+  ) {
+    return InkWell(
+      onTap: service.route.isNotEmpty
+          ? () => context.push(service.route)
+          : null,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.borderLight),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: service.color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(service.icon, color: service.color, size: 20),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              service.label,
+              textAlign: TextAlign.center,
+              style: AppFonts.caption(
+                isArabic: isArabic,
+                color: AppColors.text,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildMenuSection(BuildContext context, WidgetRef ref, bool isArabic) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -254,7 +404,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ),
               isArabic: isArabic,
-              onTap: () {},
+              onTap: () => context.push('/wallet'),
             ),
             _buildDivider(),
             _buildMenuItem(
@@ -263,7 +413,7 @@ class ProfileScreen extends ConsumerWidget {
                   ? AppStringsAr.paymentMethods
                   : AppStringsEn.paymentMethods,
               isArabic: isArabic,
-              onTap: () {},
+              onTap: () => context.push('/payment-methods'),
             ),
             _buildDivider(),
             _buildMenuItem(
@@ -272,7 +422,7 @@ class ProfileScreen extends ConsumerWidget {
                   ? AppStringsAr.referralCode
                   : AppStringsEn.referralCode,
               isArabic: isArabic,
-              onTap: () {},
+              onTap: () => context.push('/referral'),
             ),
             _buildDivider(),
             _buildMenuItem(
@@ -281,7 +431,7 @@ class ProfileScreen extends ConsumerWidget {
                   ? AppStringsAr.inviteFriends
                   : AppStringsEn.inviteFriends,
               isArabic: isArabic,
-              onTap: () {},
+              onTap: () => context.push('/referral'),
             ),
             _buildDivider(),
             _buildMenuItem(
@@ -365,4 +515,13 @@ class ProfileScreen extends ConsumerWidget {
       color: AppColors.borderLight,
     );
   }
+}
+
+class _ServiceItem {
+  final IconData icon;
+  final String label;
+  final String route;
+  final Color color;
+
+  const _ServiceItem(this.icon, this.label, this.route, this.color);
 }

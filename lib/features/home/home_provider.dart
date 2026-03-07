@@ -101,8 +101,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
     try {
       state = state.copyWith(isLoadingLocation: true);
 
-      // Request location permission
-      final permission = await Geolocator.requestPermission();
+      // Check existing permission first, only request if not granted
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
       state = state.copyWith(locationPermission: permission);
 
       // Get current location

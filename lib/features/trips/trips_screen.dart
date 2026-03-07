@@ -260,14 +260,14 @@ class _TripsScreenState extends ConsumerState<TripsScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            isArabic ? 'لا توجد رحلات بعد' : 'No trips yet',
+            isArabic ? AppStringsAr.noTripsYet : AppStringsEn.noTripsYet,
             style: AppFonts.title(isArabic: isArabic, color: AppColors.text),
           ),
           const SizedBox(height: 8),
           Text(
             isArabic
-                ? 'ابدأ رحلتك الأولى من الخريطة'
-                : 'Start your first ride from the map',
+                ? AppStringsAr.startFirstRide
+                : AppStringsEn.startFirstRide,
             style: AppFonts.bodyMedium(
               isArabic: isArabic,
               color: AppColors.textSecondary,
@@ -344,7 +344,7 @@ class _TripsScreenState extends ConsumerState<TripsScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  isArabic ? 'مكتملة' : 'Completed',
+                  isArabic ? AppStringsAr.completed : AppStringsEn.completed,
                   style: AppFonts.caption(
                     isArabic: isArabic,
                     color: AppColors.success,
@@ -366,21 +366,21 @@ class _TripsScreenState extends ConsumerState<TripsScreen> {
                 _buildTripStat(
                   Icons.timer_rounded,
                   trip.duration,
-                  isArabic ? 'المدة' : 'Duration',
+                  isArabic ? AppStringsAr.duration : AppStringsEn.duration,
                   isArabic,
                 ),
                 Container(width: 1, height: 30, color: AppColors.border),
                 _buildTripStat(
                   Icons.straighten_rounded,
                   trip.distance,
-                  isArabic ? 'المسافة' : 'Distance',
+                  isArabic ? AppStringsAr.distance : AppStringsEn.distance,
                   isArabic,
                 ),
                 Container(width: 1, height: 30, color: AppColors.border),
                 _buildTripStat(
                   Icons.payments_rounded,
                   '${trip.cost.toStringAsFixed(1)} EGP',
-                  isArabic ? 'التكلفة' : 'Cost',
+                  isArabic ? AppStringsAr.cost : AppStringsEn.cost,
                   isArabic,
                 ),
               ],

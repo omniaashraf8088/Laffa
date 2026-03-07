@@ -157,7 +157,125 @@ class AppStringsEn {
   // Trips
   static const String clearAll = 'Clear All';
   static const String clearAllTrips = 'Clear all trips?';
-  static const String clearAllTripsConfirm = 'All trip history will be deleted. Are you sure?';
+  static const String clearAllTripsConfirm =
+      'All trip history will be deleted. Are you sure?';
   static const String tripDeleted = 'Trip deleted';
   static const String undo = 'Undo';
+  static const String noTripsYet = 'No trips yet';
+  static const String startFirstRide = 'Start your first ride from the map';
+  static const String completed = 'Completed';
+  static const String duration = 'Duration';
+  static const String distance = 'Distance';
+  static const String cost = 'Cost';
+
+  // Chat
+  static const String online = 'Online';
+
+  // Coupons
+  static const String apply = 'Apply';
+  static const String expires = 'Expires';
+  static const String active = 'Active';
+  static const String expired = 'Expired';
+
+  // Profile Services
+  static const String myRides = 'My Rides';
+  static const String payments = 'Payments';
+  static const String savedPlaces = 'Saved Places';
+  static const String rateRide = 'Rate Ride';
+  static const String safetyCenter = 'Safety Center';
+  static const String support = 'Support';
+  static const String services = 'Services';
+  static const String rides = 'Rides';
+  static const String hours = 'hrs';
+  static const String defaultUser = 'Laffa User';
+
+  // Settings
+  static const String general = 'General';
+  static const String light = 'Light';
+  static const String dark = 'Dark';
+  static const String system = 'System';
+
+  // Wallet
+  static const String wallet = 'Wallet';
+  static const String currentBalance = 'Current Balance';
+  static const String topUp = 'Top Up';
+  static const String recentTransactions = 'Recent Transactions';
+  static const String topUpSuccess = 'EGP added successfully';
+  static const String chooseTopUpAmount = 'Choose Top Up Amount';
+
+  // Payment Methods
+  static const String selectDefaultPayment = 'Select Default Payment Method';
+  static const String addNewCard = 'Add New Card';
+
+  // Referral
+  static const String shareCodeGetCredit = 'Share your code & get free credit!';
+  static const String referralDescription =
+      'When a friend signs up with your code, you both get 20 EGP credit';
+  static const String yourReferralCode = 'Your Referral Code';
+  static const String codeCopied = 'Code copied!';
+  static const String copy = 'Copy';
+  static const String shareComingSoon = 'Share coming soon...';
+  static const String share = 'Share';
+  static const String friendsInvited = 'Friends Invited';
+  static const String creditsEarned = 'Credits Earned';
+
+  // Saved Places
+  static const String addNewPlaceComingSoon = 'Add new place coming soon...';
+  static const String addPlace = 'Add Place';
+  static const String noSavedPlaces = 'No saved places yet';
+  static const String addFavoritePlaces =
+      'Add your favorite places for quick access';
+  static const String placeRemoved = 'Place removed';
+  static const String homePlaceName = 'Home';
+  static const String workPlaceName = 'Work';
+  static const String universityPlaceName = 'University';
+  static const String homeAddress = '15 El-Tahrir St, Dokki, Giza';
+  static const String workAddress = '22 Ahmed Orabi St, Mohandessin';
+  static const String universityAddress = 'Cairo University, Giza';
+
+  // Safety Center
+  static const String needEmergencyHelp = 'Need Emergency Help?';
+  static const String tapToContactEmergency =
+      'Tap the button below to contact emergency services';
+  static const String callEmergency = 'Call Emergency';
+  static const String safetyTips = 'Safety Tips';
+  static const String wearHelmet = 'Wear a Helmet';
+  static const String wearHelmetDesc =
+      'Always wear a helmet while riding for your protection';
+  static const String followSpeedLimits = 'Follow Speed Limits';
+  static const String followSpeedLimitsDesc =
+      'Do not exceed the maximum allowed speed limit';
+  static const String stayVisible = 'Stay Visible';
+  static const String stayVisibleDesc =
+      'Use lights at night and wear reflective clothing';
+  static const String noPhoneWhileRiding = 'No Phone While Riding';
+  static const String noPhoneWhileRidingDesc =
+      'Avoid using your phone while riding to prevent accidents';
+  static const String followTrafficRules = 'Follow Traffic Rules';
+  static const String followTrafficRulesDesc =
+      'Obey traffic signals and road regulations';
+  static const String reportAnIssue = 'Report an Issue';
+  static const String reportAccident = 'Report an Accident';
+  static const String brokenScooter = 'Broken Scooter';
+  static const String unsafeRoad = 'Unsafe Road';
+  static const String emergencyConfirmation = 'Emergency Confirmation';
+  static const String confirmCallEmergency =
+      'Are you sure you want to call emergency services?';
+  static const String connectingEmergency =
+      'Connecting to emergency services...';
+  static const String callNow = 'Call Now';
+
+  // Company Selection
+  static const String selectCompany = 'Select Company';
+  static const String noCompaniesAvailable = 'No Companies Available';
+  static const String noCompaniesDesc =
+      'There are no active companies in your area yet. Please check back later.';
+  static const String chooseRideProvider = 'Choose Your Ride Provider';
+  static const String selectScooterCompany =
+      'Select the scooter company you want to ride with';
+  static const String multipleCities = 'Multiple cities';
+
+  // Home Drawer
+  static const String welcome = 'Welcome';
+  static const String toggleTheme = 'Toggle Theme';
 }

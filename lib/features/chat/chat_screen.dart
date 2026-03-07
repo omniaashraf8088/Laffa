@@ -143,7 +143,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   ),
                 ),
                 Text(
-                  isArabic ? 'متصل' : 'Online',
+                  isArabic ? AppStringsAr.online : AppStringsEn.online,
                   style: AppFonts.caption(
                     isArabic: isArabic,
                     color: AppColors.secondaryLight,
@@ -185,10 +185,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   Expanded(
                     child: TextField(
                       controller: _messageController,
+                      style: AppFonts.bodyMedium(
+                        isArabic: isArabic,
+                        color: AppColors.text,
+                      ),
                       decoration: InputDecoration(
                         hintText: isArabic
                             ? AppStringsAr.typeMessage
                             : AppStringsEn.typeMessage,
+                        hintStyle: AppFonts.bodyMedium(
+                          isArabic: isArabic,
+                          color: AppColors.textTertiary,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: const BorderSide(color: AppColors.border),
@@ -198,7 +206,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           vertical: 10,
                         ),
                         filled: true,
-                        fillColor: AppColors.background,
+                        fillColor: AppColors.white,
                       ),
                       onSubmitted: (_) => _sendMessage(),
                     ),

@@ -155,7 +155,123 @@ class AppStringsAr {
   // Trips
   static const String clearAll = 'مسح الكل';
   static const String clearAllTrips = 'مسح جميع الرحلات؟';
-  static const String clearAllTripsConfirm = 'سيتم حذف جميع سجل الرحلات. هل أنت متأكد؟';
+  static const String clearAllTripsConfirm =
+      'سيتم حذف جميع سجل الرحلات. هل أنت متأكد؟';
   static const String tripDeleted = 'تم حذف الرحلة';
   static const String undo = 'تراجع';
+  static const String noTripsYet = 'لا توجد رحلات بعد';
+  static const String startFirstRide = 'ابدأ رحلتك الأولى من الخريطة';
+  static const String completed = 'مكتملة';
+  static const String duration = 'المدة';
+  static const String distance = 'المسافة';
+  static const String cost = 'التكلفة';
+
+  // Chat
+  static const String online = 'متصل';
+
+  // Coupons
+  static const String apply = 'تطبيق';
+  static const String expires = 'ينتهي';
+  static const String active = 'نشط';
+  static const String expired = 'منتهي';
+
+  // Profile Services
+  static const String myRides = 'رحلاتي';
+  static const String payments = 'المدفوعات';
+  static const String savedPlaces = 'أماكن محفوظة';
+  static const String rateRide = 'قيّم رحلة';
+  static const String safetyCenter = 'مركز الأمان';
+  static const String support = 'الدعم';
+  static const String services = 'الخدمات';
+  static const String rides = 'رحلة';
+  static const String hours = 'ساعة';
+  static const String defaultUser = 'مستخدم Laffa';
+
+  // Settings
+  static const String general = 'عام';
+  static const String light = 'فاتح';
+  static const String dark = 'داكن';
+  static const String system = 'نظام';
+
+  // Wallet
+  static const String wallet = 'المحفظة';
+  static const String currentBalance = 'الرصيد الحالي';
+  static const String topUp = 'شحن الرصيد';
+  static const String recentTransactions = 'المعاملات الأخيرة';
+  static const String topUpSuccess = 'تم شحن EGP بنجاح';
+  static const String chooseTopUpAmount = 'اختر مبلغ الشحن';
+
+  // Payment Methods
+  static const String selectDefaultPayment = 'اختر طريقة الدفع الافتراضية';
+  static const String addNewCard = 'إضافة بطاقة جديدة';
+
+  // Referral
+  static const String shareCodeGetCredit = 'شارك الكود واحصل على رصيد مجاني!';
+  static const String referralDescription =
+      'عند تسجيل صديقك باستخدام الكود، كلاكما يحصل على 20 EGP رصيد';
+  static const String yourReferralCode = 'كود الإحالة الخاص بك';
+  static const String codeCopied = 'تم نسخ الكود';
+  static const String copy = 'نسخ';
+  static const String shareComingSoon = 'مشاركة قريباً...';
+  static const String share = 'مشاركة';
+  static const String friendsInvited = 'أصدقاء دعوتهم';
+  static const String creditsEarned = 'رصيد مكتسب';
+
+  // Saved Places
+  static const String addNewPlaceComingSoon = 'إضافة مكان جديد قريباً...';
+  static const String addPlace = 'إضافة مكان';
+  static const String noSavedPlaces = 'لا توجد أماكن محفوظة';
+  static const String addFavoritePlaces = 'أضف أماكنك المفضلة للوصول السريع';
+  static const String placeRemoved = 'تم حذف المكان';
+  static const String homePlaceName = 'المنزل';
+  static const String workPlaceName = 'العمل';
+  static const String universityPlaceName = 'الجامعة';
+  static const String homeAddress = '١٥ شارع التحرير، الدقي، الجيزة';
+  static const String workAddress = '٢٢ شارع أحمد عرابي، المهندسين';
+  static const String universityAddress = 'جامعة القاهرة، الجيزة';
+
+  // Safety Center
+  static const String needEmergencyHelp = 'هل تحتاج مساعدة طارئة؟';
+  static const String tapToContactEmergency =
+      'اضغط الزر أدناه للتواصل مع خدمات الطوارئ';
+  static const String callEmergency = 'اتصل بالطوارئ';
+  static const String safetyTips = 'نصائح السلامة';
+  static const String wearHelmet = 'ارتدِ خوذة';
+  static const String wearHelmetDesc =
+      'احرص دائماً على ارتداء خوذة أثناء الركوب';
+  static const String followSpeedLimits = 'التزم بالسرعة';
+  static const String followSpeedLimitsDesc =
+      'لا تتجاوز الحد الأقصى للسرعة المسموح بها';
+  static const String stayVisible = 'كن مرئياً';
+  static const String stayVisibleDesc =
+      'استخدم الإضاءة ليلاً وارتدِ ملابس عاكسة';
+  static const String noPhoneWhileRiding = 'لا تستخدم الهاتف';
+  static const String noPhoneWhileRidingDesc =
+      'لا تستخدم هاتفك أثناء الركوب لتجنب الحوادث';
+  static const String followTrafficRules = 'اتبع قواعد المرور';
+  static const String followTrafficRulesDesc =
+      'التزم بإشارات المرور وقواعد الطريق';
+  static const String reportAnIssue = 'الإبلاغ عن مشكلة';
+  static const String reportAccident = 'الإبلاغ عن حادث';
+  static const String brokenScooter = 'سكوتر معطل';
+  static const String unsafeRoad = 'طريق غير آمن';
+  static const String emergencyConfirmation = 'تأكيد الطوارئ';
+  static const String confirmCallEmergency =
+      'هل أنت متأكد أنك تريد الاتصال بخدمات الطوارئ؟';
+  static const String connectingEmergency = 'جاري الاتصال بخدمات الطوارئ...';
+  static const String callNow = 'اتصل الآن';
+
+  // Company Selection
+  static const String selectCompany = 'اختيار الشركة';
+  static const String noCompaniesAvailable = 'لا توجد شركات متاحة';
+  static const String noCompaniesDesc =
+      'لا توجد شركات نشطة في منطقتك حالياً. يرجى المحاولة لاحقاً.';
+  static const String chooseRideProvider = 'اختر مزود الرحلات';
+  static const String selectScooterCompany =
+      'اختر شركة السكوتر التي تريد الركوب معها';
+  static const String multipleCities = 'عدة مدن';
+
+  // Home Drawer
+  static const String welcome = 'مرحبا بك';
+  static const String toggleTheme = 'تغيير المظهر';
 }

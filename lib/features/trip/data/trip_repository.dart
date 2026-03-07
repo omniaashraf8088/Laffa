@@ -65,7 +65,7 @@ class TripRepository {
     }
   }
 
-  /// Fetches ride statistics for a company (admin dashboard).
+  /// Fetches ride statistics for a company.
   Future<Map<String, dynamic>> getRideStats({required String companyId}) async {
     try {
       return await _apiClient.get('/companies/$companyId/rides/stats');

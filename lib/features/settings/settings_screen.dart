@@ -50,7 +50,10 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 10),
             _buildThemeSelector(ref, localization, isArabic),
             const SizedBox(height: 24),
-            _buildSectionTitle(isArabic ? 'عام' : 'General', isArabic),
+            _buildSectionTitle(
+              isArabic ? AppStringsAr.general : AppStringsEn.general,
+              isArabic,
+            ),
             const SizedBox(height: 10),
             _buildSettingsCard(
               children: [
@@ -170,7 +173,7 @@ class SettingsScreen extends ConsumerWidget {
       children: [
         _buildOptionTile(
           icon: Icons.light_mode_rounded,
-          label: isArabic ? 'فاتح' : 'Light',
+          label: isArabic ? AppStringsAr.light : AppStringsEn.light,
           isArabic: isArabic,
           isSelected: localization.themeMode == AppThemeMode.light,
           onTap: () {
@@ -182,7 +185,7 @@ class SettingsScreen extends ConsumerWidget {
         _buildDivider(),
         _buildOptionTile(
           icon: Icons.dark_mode_rounded,
-          label: isArabic ? 'داكن' : 'Dark',
+          label: isArabic ? AppStringsAr.dark : AppStringsEn.dark,
           isArabic: isArabic,
           isSelected: localization.themeMode == AppThemeMode.dark,
           onTap: () {
@@ -194,7 +197,7 @@ class SettingsScreen extends ConsumerWidget {
         _buildDivider(),
         _buildOptionTile(
           icon: Icons.settings_brightness_rounded,
-          label: isArabic ? 'نظام' : 'System',
+          label: isArabic ? AppStringsAr.system : AppStringsEn.system,
           isArabic: isArabic,
           isSelected: localization.themeMode == AppThemeMode.system,
           onTap: () {

@@ -271,7 +271,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    isArabic ? 'مرحبا بك' : 'Welcome',
+                    isArabic ? AppStringsAr.welcome : AppStringsEn.welcome,
                     style: AppFonts.style(
                       isArabic: isArabic,
                       fontSize: AppFonts.sizeXLarge,
@@ -296,13 +296,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             // Menu items
             _buildDrawerItem(
               icon: Icons.home_rounded,
-              label: isArabic ? 'الرئيسية' : 'Home',
+              label: isArabic ? AppStringsAr.home : AppStringsEn.home,
               isArabic: isArabic,
               onTap: () => Navigator.of(context).pop(),
             ),
             _buildDrawerItem(
               icon: Icons.person_rounded,
-              label: isArabic ? 'الملف الشخصي' : 'Profile',
+              label: isArabic ? AppStringsAr.profile : AppStringsEn.profile,
               isArabic: isArabic,
               onTap: () {
                 Navigator.of(context).pop();
@@ -311,7 +311,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             _buildDrawerItem(
               icon: Icons.history_rounded,
-              label: isArabic ? 'سجل الرحلات' : 'Trip History',
+              label: isArabic
+                  ? AppStringsAr.tripHistory
+                  : AppStringsEn.tripHistory,
               isArabic: isArabic,
               onTap: () {
                 Navigator.of(context).pop();
@@ -320,7 +322,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             _buildDrawerItem(
               icon: Icons.local_offer_rounded,
-              label: isArabic ? 'الكوبونات' : 'Coupons',
+              label: isArabic ? AppStringsAr.coupons : AppStringsEn.coupons,
               isArabic: isArabic,
               onTap: () {
                 Navigator.of(context).pop();
@@ -329,7 +331,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             _buildDrawerItem(
               icon: Icons.chat_rounded,
-              label: isArabic ? 'الدعم' : 'Support',
+              label: isArabic ? AppStringsAr.support : AppStringsEn.support,
               isArabic: isArabic,
               onTap: () {
                 Navigator.of(context).pop();
@@ -338,7 +340,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             _buildDrawerItem(
               icon: Icons.settings_rounded,
-              label: isArabic ? 'الإعدادات' : 'Settings',
+              label: isArabic ? AppStringsAr.settings : AppStringsEn.settings,
               isArabic: isArabic,
               onTap: () {
                 Navigator.of(context).pop();
@@ -365,7 +367,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.only(bottom: 16),
               child: _buildDrawerItem(
                 icon: Icons.dark_mode_rounded,
-                label: isArabic ? 'تغيير المظهر' : 'Toggle Theme',
+                label: isArabic
+                    ? AppStringsAr.toggleTheme
+                    : AppStringsEn.toggleTheme,
                 isArabic: isArabic,
                 onTap: () {
                   ref.read(localizationProvider.notifier).toggleTheme();
