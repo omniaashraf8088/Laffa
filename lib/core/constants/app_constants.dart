@@ -20,10 +20,10 @@ class AppConstants {
   static const int maxNameLength = 50;
   static const int maxPhoneLength = 15;
 
-  // Map Settings
+  // Map Settings (Cairo, Egypt)
   static const double defaultZoomLevel = 15.0;
-  static const double initialLatitude = 51.5074;
-  static const double initialLongitude = -0.1278;
+  static const double initialLatitude = 30.0444;
+  static const double initialLongitude = 31.2357;
 
   // Location Settings
   static const int locationRefreshIntervalSeconds = 10;

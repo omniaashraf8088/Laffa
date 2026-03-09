@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Payment card form widget with card number, expiry, CVV, and holder name fields.
 /// Includes automatic formatting and real-time validation feedback.
@@ -51,7 +53,7 @@ class PaymentFormWidget extends StatelessWidget {
         children: [
           // Card number field
           _buildField(
-            label: isArabic ? 'رقم البطاقة' : 'Card Number',
+            label: isArabic ? AppStringsAr.cardNumber : AppStringsEn.cardNumber,
             hint: '1234 5678 9012 3456',
             controller: cardNumberController,
             error: cardNumberError,
@@ -71,7 +73,7 @@ class PaymentFormWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildField(
-                  label: isArabic ? 'تاريخ الانتهاء' : 'Expiry',
+                  label: isArabic ? AppStringsAr.expiry : AppStringsEn.expiry,
                   hint: 'MM/YY',
                   controller: expiryController,
                   error: expiryError,
@@ -107,8 +109,12 @@ class PaymentFormWidget extends StatelessWidget {
 
           // Card holder name
           _buildField(
-            label: isArabic ? 'اسم حامل البطاقة' : 'Card Holder Name',
-            hint: isArabic ? 'الاسم كما يظهر على البطاقة' : 'As shown on card',
+            label: isArabic
+                ? AppStringsAr.cardHolderName
+                : AppStringsEn.cardHolderName,
+            hint: isArabic
+                ? AppStringsAr.asShownOnCard
+                : AppStringsEn.asShownOnCard,
             controller: holderNameController,
             error: holderNameError,
             keyboardType: TextInputType.name,
@@ -137,10 +143,8 @@ class PaymentFormWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppFonts.style(
+          style: AppTextStyles.smallMedium(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeSmall,
-            fontWeight: AppFonts.medium,
             color: AppColors.textSecondary,
           ),
         ),
@@ -151,26 +155,22 @@ class PaymentFormWidget extends StatelessWidget {
           obscureText: obscureText,
           inputFormatters: inputFormatters,
           textCapitalization: textCapitalization,
-          style: AppFonts.style(
+          style: AppTextStyles.bodyMedium(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
-            fontWeight: AppFonts.medium,
             color: AppColors.text,
           ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: AppFonts.style(
+            hintStyle: AppTextStyles.body(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeBody,
               color: AppColors.textTertiary,
             ),
             prefixIcon: icon != null
                 ? Icon(icon, color: AppColors.primary, size: 20)
                 : null,
             errorText: error,
-            errorStyle: AppFonts.style(
+            errorStyle: AppTextStyles.caption(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeXSmall,
               color: AppColors.error,
             ),
             filled: true,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
-import '../../domain/trip_model.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
+import '../../data/models/trip_model.dart';
 
 /// Card widget that displays trip information (bike, station, distance, cost).
 class TripInfoCard extends StatelessWidget {
@@ -38,7 +40,7 @@ class TripInfoCard extends StatelessWidget {
           // Bike info row
           _buildInfoRow(
             icon: Icons.directions_bike_rounded,
-            label: isArabic ? 'الدراجة' : 'Bike',
+            label: isArabic ? AppStringsAr.bike : AppStringsEn.bike,
             value: trip.bikeName,
             color: AppColors.primary,
           ),
@@ -50,7 +52,9 @@ class TripInfoCard extends StatelessWidget {
           // Start station row
           _buildInfoRow(
             icon: Icons.location_on_rounded,
-            label: isArabic ? 'محطة البداية' : 'Start Station',
+            label: isArabic
+                ? AppStringsAr.startStation
+                : AppStringsEn.startStation,
             value: trip.startStation,
             color: AppColors.success,
           ),
@@ -62,7 +66,9 @@ class TripInfoCard extends StatelessWidget {
             ),
             _buildInfoRow(
               icon: Icons.flag_rounded,
-              label: isArabic ? 'محطة النهاية' : 'End Station',
+              label: isArabic
+                  ? AppStringsAr.endStation
+                  : AppStringsEn.endStation,
               value: trip.endStation!,
               color: AppColors.error,
             ),
@@ -75,7 +81,7 @@ class TripInfoCard extends StatelessWidget {
             ),
             _buildInfoRow(
               icon: Icons.straighten_rounded,
-              label: isArabic ? 'المسافة' : 'Distance',
+              label: isArabic ? AppStringsAr.distance : AppStringsEn.distance,
               value: '${trip.distanceKm.toStringAsFixed(1)} km',
               color: AppColors.info,
             ),
@@ -88,8 +94,8 @@ class TripInfoCard extends StatelessWidget {
             ),
             _buildInfoRow(
               icon: Icons.payments_rounded,
-              label: isArabic ? 'التكلفة' : 'Cost',
-              value: '${trip.cost.toStringAsFixed(1)} EGP',
+              label: isArabic ? AppStringsAr.cost : AppStringsEn.cost,
+              value: '${trip.cost.toStringAsFixed(1)} ${AppStringsEn.currency}',
               color: AppColors.primary,
               isBold: true,
             ),
@@ -125,20 +131,22 @@ class TripInfoCard extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppFonts.style(
+                style: AppTextStyles.caption(
                   isArabic: isArabic,
-                  fontSize: AppFonts.sizeXSmall,
                   color: AppColors.textTertiary,
                 ),
               ),
               Text(
                 value,
-                style: AppFonts.style(
-                  isArabic: isArabic,
-                  fontSize: AppFonts.sizeBody,
-                  fontWeight: isBold ? AppFonts.bold : AppFonts.semiBold,
-                  color: AppColors.text,
-                ),
+                style: isBold
+                    ? AppTextStyles.bodyBold(
+                        isArabic: isArabic,
+                        color: AppColors.text,
+                      )
+                    : AppTextStyles.label(
+                        isArabic: isArabic,
+                        color: AppColors.text,
+                      ),
               ),
             ],
           ),

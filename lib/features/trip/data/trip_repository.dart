@@ -1,5 +1,5 @@
 import '../../../core/network/api_client.dart';
-import '../domain/trip_model.dart';
+import 'models/trip_model.dart';
 
 /// Repository responsible for trip-related data operations.
 /// All operations are scoped to a companyId for multi-tenant isolation.

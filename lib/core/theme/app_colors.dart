@@ -65,4 +65,20 @@ class AppColors {
   static const Color mapMarkerUnavailable = Color(0xFFBDBDBD);
   static const Color mapMarkerSelected = Color(0xFF6F4E37);
   static const Color mapRoute = Color(0xFF6F4E37);
+
+  // Onboarding Backgrounds
+  static const Color onboardingBg1 = Color(0xFFF5EBDD);
+  static const Color onboardingBg2 = Color(0xFFFFF8F0);
+  static const Color onboardingBg3 = Color(0xFFFFF5E9);
+  static const Color onboardingBg4 = Color(0xFFFFF2E6);
+  static const Color onboardingBg5 = Color(0xFFFFF0DD);
+
+  // Dark Theme Preset
+  static const Color darkPresetGreen = Color(0xFF1B5E20);
+  static const Color darkPresetRed = Color(0xFF7F0000);
+  static const Color darkPresetBrown = Color(0xFF5D4037);
+  static const Color darkPresetBlue = Color(0xFF0D47A1);
+
+  // Splash
+  static const Color splashShaderWhite = Color(0x44FFFFFF);
 }

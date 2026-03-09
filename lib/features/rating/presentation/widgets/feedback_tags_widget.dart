@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
 
 /// Widget that displays selectable feedback tags as chips.
 class FeedbackTagsWidget extends StatelessWidget {
@@ -42,12 +42,15 @@ class FeedbackTagsWidget extends StatelessWidget {
             ),
             child: Text(
               tag,
-              style: AppFonts.style(
-                isArabic: isArabic,
-                fontSize: AppFonts.sizeSmall,
-                fontWeight: isSelected ? AppFonts.semiBold : AppFonts.regular,
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
-              ),
+              style: isSelected
+                  ? AppTextStyles.smallLabel(
+                      isArabic: isArabic,
+                      color: AppColors.primary,
+                    )
+                  : AppTextStyles.bodySmall(
+                      isArabic: isArabic,
+                      color: AppColors.textSecondary,
+                    ),
             ),
           ),
         );

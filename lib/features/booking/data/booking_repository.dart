@@ -1,5 +1,5 @@
 import '../../../core/network/api_client.dart';
-import '../domain/booking_model.dart';
+import 'models/booking_model.dart';
 
 /// Repository responsible for booking-related data operations.
 /// All operations are scoped to a companyId for multi-tenant isolation.

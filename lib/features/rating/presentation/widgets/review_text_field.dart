@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Text field widget for writing a review comment.
 class ReviewTextField extends StatelessWidget {
@@ -22,11 +24,9 @@ class ReviewTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          isArabic ? 'أضف تعليقاً (اختياري)' : 'Add a comment (optional)',
-          style: AppFonts.style(
+          isArabic ? AppStringsAr.addComment : AppStringsEn.addComment,
+          style: AppTextStyles.bodyMedium(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
-            fontWeight: AppFonts.medium,
             color: AppColors.textSecondary,
           ),
         ),
@@ -36,18 +36,13 @@ class ReviewTextField extends StatelessWidget {
           maxLines: 4,
           maxLength: 500,
           onChanged: onChanged,
-          style: AppFonts.style(
-            isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
-            color: AppColors.text,
-          ),
+          style: AppTextStyles.body(isArabic: isArabic, color: AppColors.text),
           decoration: InputDecoration(
             hintText: isArabic
                 ? 'أخبرنا عن تجربتك...'
                 : 'Tell us about your experience...',
-            hintStyle: AppFonts.style(
+            hintStyle: AppTextStyles.body(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeBody,
               color: AppColors.textTertiary,
             ),
             filled: true,
@@ -65,7 +60,7 @@ class ReviewTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
-            counterStyle: AppFonts.caption(
+            counterStyle: AppTextStyles.caption(
               isArabic: isArabic,
               color: AppColors.textTertiary,
             ),

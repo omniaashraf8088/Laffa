@@ -1,5 +1,5 @@
 import '../../../core/network/api_client.dart';
-import '../domain/rating_model.dart';
+import 'models/rating_model.dart';
 
 /// Repository responsible for rating-related data operations.
 /// All operations are scoped to a companyId for multi-tenant isolation.

@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/splash/splash_screen.dart';
-import '../../features/onboarding/onboarding_screen.dart';
-import '../../features/auth/login_screen.dart';
-import '../../features/auth/signup_screen.dart';
-import '../../features/auth/forgot_password_screen.dart';
-import '../../features/home/home_screen.dart';
-import '../../features/profile/profile_screen.dart';
-import '../../features/trips/trips_screen.dart';
-import '../../features/coupons/coupons_screen.dart';
-import '../../features/chat/chat_screen.dart';
-import '../../features/settings/settings_screen.dart';
-import '../../features/booking/presentation/booking_screen.dart';
-import '../../features/payment/presentation/payment_screen.dart';
-import '../../features/trip/presentation/start_trip_screen.dart';
-import '../../features/trip/presentation/end_trip_screen.dart';
-import '../../features/rating/presentation/rating_screen.dart';
-import '../../features/ride/presentation/qr_unlock_screen.dart';
-import '../../features/ride/presentation/ride_tracking_screen.dart';
-import '../../features/ride/presentation/ride_payment_screen.dart';
-import '../../features/ride/presentation/ride_history_screen.dart';
-import '../../features/wallet/wallet_screen.dart';
-import '../../features/wallet/payment_methods_screen.dart';
-import '../../features/wallet/referral_screen.dart';
-import '../../features/saved_places/saved_places_screen.dart';
-import '../../features/safety_center/safety_center_screen.dart';
-import '../../features/company_selection/company_selection_screen.dart';
+import '../../features/splash/presentation/screens/splash_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/auth/presentation/screens/forgot_password_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/trips/presentation/screens/trips_screen.dart';
+import '../../features/coupons/presentation/screens/coupons_screen.dart';
+import '../../features/chat/presentation/screens/chat_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/booking/presentation/screens/booking_screen.dart';
+import '../../features/payment/presentation/screens/payment_screen.dart';
+import '../../features/trip/presentation/screens/start_trip_screen.dart';
+import '../../features/trip/presentation/screens/end_trip_screen.dart';
+import '../../features/rating/presentation/screens/rating_screen.dart';
+import '../../features/ride/presentation/screens/qr_unlock_screen.dart';
+import '../../features/ride/presentation/screens/ride_tracking_screen.dart';
+import '../../features/ride/presentation/screens/ride_payment_screen.dart';
+import '../../features/ride/presentation/screens/ride_history_screen.dart';
+import '../../features/wallet/presentation/screens/wallet_screen.dart';
+import '../../features/wallet/presentation/screens/payment_methods_screen.dart';
+import '../../features/wallet/presentation/screens/referral_screen.dart';
+import '../../features/saved_places/presentation/screens/saved_places_screen.dart';
+import '../../features/safety_center/presentation/screens/safety_center_screen.dart';
 import '../tenant/tenant_service.dart';
 import '../tenant/models/user_role.dart';
 
@@ -41,9 +40,6 @@ class AppRouter {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String forgotPassword = '/forgot-password';
-
-  // ── Company Selection ────────────────────────────
-  static const String companySelect = '/company-select';
 
   // ── Rider Routes ─────────────────────────────────
   static const String home = '/home';
@@ -107,12 +103,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRouter.forgotPassword,
         builder: (context, state) => const ForgotPasswordScreen(),
-      ),
-
-      // ── Company Selection ──────────────────────────
-      GoRoute(
-        path: AppRouter.companySelect,
-        builder: (context, state) => const CompanySelectionScreen(),
       ),
 
       // ── Rider Routes ──────────────────────────────
@@ -240,9 +230,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         return _homeRouteForRole(role, hasCompany);
       }
 
-      // Company selection is allowed for all authenticated users
-      if (location == AppRouter.companySelect) return null;
-
       // Super admin → settings only
       if (role.isSuperAdmin) {
         if (location == '/settings') return null;
@@ -251,7 +238,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 
       // Company admin
       if (role.isCompanyAdmin) {
-        if (!hasCompany) return AppRouter.companySelect;
         if (location == '/settings') return null;
         return AppRouter.home;
       }
@@ -278,7 +264,7 @@ String _homeRouteForRole(UserRole role, bool hasCompany) {
     case UserRole.superAdmin:
       return AppRouter.home;
     case UserRole.companyAdmin:
-      return hasCompany ? AppRouter.home : AppRouter.companySelect;
+      return AppRouter.home;
     case UserRole.rider:
       return AppRouter.home;
   }

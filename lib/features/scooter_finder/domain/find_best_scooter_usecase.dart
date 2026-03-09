@@ -1,5 +1,5 @@
 import '../data/scooter_finder_repository.dart';
-import 'scooter_suggestion_model.dart';
+import '../data/models/scooter_suggestion_model.dart';
 
 /// Use case that delegates scooter ranking to the repository.
 class FindBestScooterUseCase {

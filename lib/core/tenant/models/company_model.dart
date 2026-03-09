@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../../localization/app_strings_en.dart';
+
 import 'subscription_plan.dart';
 
 /// Represents a company (tenant) on the Laffa SaaS platform.
@@ -122,7 +124,7 @@ class CompanyPricing {
     this.unlockFee = 5.0,
     this.pricePerMinute = 2.5,
     this.surgeMultiplier = 1.0,
-    this.currency = 'EGP',
+    this.currency = AppStringsEn.currency,
   });
 
   double calculateRideCost({
@@ -147,7 +149,7 @@ class CompanyPricing {
       unlockFee: (json['unlockFee'] as num?)?.toDouble() ?? 5.0,
       pricePerMinute: (json['pricePerMinute'] as num?)?.toDouble() ?? 2.5,
       surgeMultiplier: (json['surgeMultiplier'] as num?)?.toDouble() ?? 1.0,
-      currency: json['currency'] as String? ?? 'EGP',
+      currency: json['currency'] as String? ?? AppStringsEn.currency,
     );
   }
 }

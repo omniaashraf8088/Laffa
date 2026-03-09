@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Duration picker widget that lets the user select an estimated ride duration.
 class DurationPickerWidget extends StatelessWidget {
@@ -24,13 +26,10 @@ class DurationPickerWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          isArabic ? 'مدة الرحلة المتوقعة' : 'Estimated Ride Duration',
-          style: AppFonts.style(
-            isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
-            fontWeight: AppFonts.semiBold,
-            color: AppColors.text,
-          ),
+          isArabic
+              ? AppStringsAr.estRideDuration
+              : AppStringsEn.estRideDuration,
+          style: AppTextStyles.label(isArabic: isArabic, color: AppColors.text),
         ),
         const SizedBox(height: 12),
         Wrap(
@@ -55,10 +54,8 @@ class DurationPickerWidget extends StatelessWidget {
                 ),
                 child: Text(
                   _formatMinutes(minutes),
-                  style: AppFonts.style(
+                  style: AppTextStyles.smallLabel(
                     isArabic: isArabic,
-                    fontSize: AppFonts.sizeSmall,
-                    fontWeight: AppFonts.semiBold,
                     color: isSelected ? AppColors.white : AppColors.text,
                   ),
                 ),

@@ -1,5 +1,5 @@
 import '../../../core/network/api_client.dart';
-import '../domain/payment_model.dart';
+import 'models/payment_model.dart';
 
 /// Repository responsible for payment-related data operations.
 /// All operations are scoped to a companyId for multi-tenant isolation.

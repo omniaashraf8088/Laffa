@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
-import '../../domain/booking_model.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
+import '../../data/models/booking_model.dart';
 
 /// Widget that displays a summary of the booking before confirmation.
 class BookingSummaryWidget extends StatelessWidget {
@@ -42,8 +44,13 @@ class BookingSummaryWidget extends StatelessWidget {
         children: [
           // Section title
           Text(
-            isArabic ? 'ملخص الحجز' : 'Booking Summary',
-            style: AppFonts.title(isArabic: isArabic, color: AppColors.text),
+            isArabic
+                ? AppStringsAr.bookingSummary
+                : AppStringsEn.bookingSummary,
+            style: AppTextStyles.title(
+              isArabic: isArabic,
+              color: AppColors.text,
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -52,31 +59,41 @@ class BookingSummaryWidget extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Bike details row
-          _buildRow(label: isArabic ? 'الدراجة' : 'Bike', value: bike.name),
+          _buildRow(
+            label: isArabic ? AppStringsAr.bike : AppStringsEn.bike,
+            value: bike.name,
+          ),
           const SizedBox(height: 12),
 
           // Type row
           _buildRow(
-            label: isArabic ? 'النوع' : 'Type',
+            label: isArabic ? AppStringsAr.type : AppStringsEn.type,
             value: bike.displayType,
           ),
           const SizedBox(height: 12),
 
           // Station row
-          _buildRow(label: isArabic ? 'المحطة' : 'Station', value: stationName),
+          _buildRow(
+            label: isArabic ? AppStringsAr.station : AppStringsEn.station,
+            value: stationName,
+          ),
           const SizedBox(height: 12),
 
           // Rate row
           _buildRow(
-            label: isArabic ? 'السعر/دقيقة' : 'Rate/min',
-            value: '${bike.pricePerMinute.toStringAsFixed(1)} EGP',
+            label: isArabic ? AppStringsAr.ratePerMin : AppStringsEn.ratePerMin,
+            value:
+                '${bike.pricePerMinute.toStringAsFixed(1)} ${AppStringsEn.currency}',
           ),
           const SizedBox(height: 12),
 
           // Duration row
           _buildRow(
-            label: isArabic ? 'المدة المتوقعة' : 'Est. Duration',
-            value: '$estimatedMinutes min',
+            label: isArabic
+                ? AppStringsAr.estDuration
+                : AppStringsEn.estDuration,
+            value:
+                '$estimatedMinutes ${isArabic ? AppStringsAr.min : AppStringsEn.min}',
           ),
           const SizedBox(height: 16),
 
@@ -89,11 +106,11 @@ class BookingSummaryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                isArabic ? 'التكلفة المتوقعة' : 'Estimated Cost',
-                style: AppFonts.style(
+                isArabic
+                    ? AppStringsAr.estimatedCost
+                    : AppStringsEn.estimatedCost,
+                style: AppTextStyles.sectionTitle(
                   isArabic: isArabic,
-                  fontSize: AppFonts.sizeMedium,
-                  fontWeight: AppFonts.bold,
                   color: AppColors.text,
                 ),
               ),
@@ -107,11 +124,9 @@ class BookingSummaryWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  '${estimatedCost.toStringAsFixed(1)} EGP',
-                  style: AppFonts.style(
+                  '${estimatedCost.toStringAsFixed(1)} ${AppStringsEn.currency}',
+                  style: AppTextStyles.sectionTitle(
                     isArabic: isArabic,
-                    fontSize: AppFonts.sizeMedium,
-                    fontWeight: AppFonts.bold,
                     color: AppColors.primary,
                   ),
                 ),
@@ -130,18 +145,15 @@ class BookingSummaryWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppFonts.style(
+          style: AppTextStyles.body(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
             color: AppColors.textSecondary,
           ),
         ),
         Text(
           value,
-          style: AppFonts.style(
+          style: AppTextStyles.bodyMedium(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeBody,
-            fontWeight: AppFonts.medium,
             color: AppColors.text,
           ),
         ),

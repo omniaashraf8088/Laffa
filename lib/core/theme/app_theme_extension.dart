@@ -59,10 +59,10 @@ class LaffaThemeExtension extends ThemeExtension<LaffaThemeExtension> {
     bookingCardColor: AppColors.surfaceDark,
     tripTimerBg: AppColors.black,
     ratingBg: AppColors.surfaceDark,
-    successBg: Color(0xFF1B5E20),
-    errorBg: Color(0xFF7F0000),
-    warningBg: Color(0xFF5D4037),
-    infoBg: Color(0xFF0D47A1),
+    successBg: AppColors.darkPresetGreen,
+    errorBg: AppColors.darkPresetRed,
+    warningBg: AppColors.darkPresetBrown,
+    infoBg: AppColors.darkPresetBlue,
   );
 
   @override

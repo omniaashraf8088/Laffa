@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
-import '../../domain/payment_model.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
+import '../../data/models/payment_model.dart';
 
 /// Widget that displays selectable payment methods (card, wallet, cash).
 class PaymentMethodSelector extends StatelessWidget {
@@ -25,11 +27,9 @@ class PaymentMethodSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          isArabic ? 'طريقة الدفع' : 'Payment Method',
-          style: AppFonts.style(
+          isArabic ? AppStringsAr.paymentMethod : AppStringsEn.paymentMethod,
+          style: AppTextStyles.button(
             isArabic: isArabic,
-            fontSize: AppFonts.sizeMedium,
-            fontWeight: AppFonts.semiBold,
             color: AppColors.text,
           ),
         ),
@@ -87,19 +87,18 @@ class PaymentMethodSelector extends StatelessWidget {
                 children: [
                   Text(
                     method.displayName,
-                    style: AppFonts.style(
+                    style: AppTextStyles.label(
                       isArabic: isArabic,
-                      fontSize: AppFonts.sizeBody,
-                      fontWeight: AppFonts.semiBold,
                       color: AppColors.text,
                     ),
                   ),
                   if (method.isDefault)
                     Text(
-                      isArabic ? 'افتراضي' : 'Default',
-                      style: AppFonts.style(
+                      isArabic
+                          ? AppStringsAr.defaultLabel
+                          : AppStringsEn.defaultLabel,
+                      style: AppTextStyles.caption(
                         isArabic: isArabic,
-                        fontSize: AppFonts.sizeXSmall,
                         color: AppColors.primary,
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../domain/scooter_suggestion_model.dart';
+import 'models/scooter_suggestion_model.dart';
 
 /// Repository that fetches and ranks scooters for smart suggestions.
 /// In production this would call a backend API; here it uses local data.

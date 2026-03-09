@@ -278,4 +278,172 @@ class AppStringsEn {
   // Home Drawer
   static const String welcome = 'Welcome';
   static const String toggleTheme = 'Toggle Theme';
+
+  // Booking
+  static const String bookingSummary = 'Booking Summary';
+  static const String bike = 'Bike';
+  static const String type = 'Type';
+  static const String station = 'Station';
+  static const String ratePerMin = 'Rate/min';
+  static const String estDuration = 'Est. Duration';
+  static const String estimatedCost = 'Estimated Cost';
+  static const String estRideDuration = 'Estimated Ride Duration';
+
+  // Trip (additional)
+  static const String yourTrip = 'Your Trip';
+  static const String tripInProgress = 'Trip in Progress';
+  static const String startStation = 'Start Station';
+  static const String endStation = 'End Station';
+  static const String endingTrip = 'Ending...';
+  static const String endTrip = 'End Trip';
+  static const String unlockingBike = 'Unlocking your bike...';
+  static const String tripCompleted = 'Trip Completed!';
+  static const String thanksForRiding = 'Thanks for riding with Laffa';
+  static const String noTripData = 'No trip data available';
+  static const String backToHome = 'Back to Home';
+  static const String rateThisTrip = 'Rate This Trip';
+
+  // Safety Tips (inline)
+  static const String safetyTip1 = 'Wear a safety helmet';
+  static const String safetyTip2 = 'Follow traffic rules';
+  static const String safetyTip3 = 'Use bike lanes when available';
+
+  // Payment (additional)
+  static const String payment = 'Payment';
+  static const String amountDue = 'Amount Due';
+  static const String estimatedRideCost = 'Estimated ride cost';
+  static const String paymentMethod = 'Payment Method';
+  static const String defaultLabel = 'Default';
+  static const String cardNumber = 'Card Number';
+  static const String expiry = 'Expiry';
+  static const String cardHolderName = 'Card Holder Name';
+  static const String asShownOnCard = 'As shown on card';
+  static const String processing = 'Processing...';
+  static const String payAmount = 'Pay';
+  static const String paymentSuccessful = 'Payment Successful!';
+  static const String canStartTrip = 'You can start your trip now';
+  static const String startTrip = 'Start Trip';
+
+  // Auth (additional)
+  static const String tooWeak = 'Too weak';
+  static const String weak = 'Weak';
+  static const String medium = 'Medium';
+  static const String strong = 'Strong';
+  static const String nameHintEn = 'John Doe';
+  static const String emailHintEn = 'example@mail.com';
+  static const String phoneHintEn = '+1 234 567 8900';
+  static const String passwordPlaceholder = '••••••••';
+
+  // Rating (additional)
+  static const String whatMadeYouRate = 'What made you rate this way?';
+  static const String rateYourTrip = 'Rate Your Trip';
+  static const String happyToHear = 'Happy to hear that!';
+  static const String thanksForFeedback = 'Thanks for your feedback';
+  static const String sorryExperience = 'Sorry about your experience';
+  static const String howWasRide = 'How was your ride?';
+  static const String submitRating = 'Submit Rating';
+  static const String thanksForRating = 'Thanks for Rating!';
+  static const String feedbackHelps = 'Your feedback helps us improve';
+  static const String addComment = 'Add a comment (optional)';
+
+  // Booking (additional)
+  static const String bookABike = 'Book a Bike';
+  static const String availableBikes = 'Available Bikes';
+  static const String confirmBooking = 'Confirm Booking';
+  static const String perMin = '/min';
+  static const String min = 'min';
+
+  // Onboarding (navigation)
+  // skip, back, next, getStarted already exist above
+
+  // Forgot Password
+  static const String enterEmailForReset =
+      'Enter your email to receive a password reset link';
+  static const String backTo = 'Back to ';
+  static const String checkEmailForReset =
+      'Check your email for password reset instructions';
+
+  // Ride Tracking
+  static const String time = 'Time';
+  static const String resume = 'Resume';
+  static const String pause = 'Pause';
+  static const String finishRide = 'Finish Ride';
+  static const String searchingScooter = 'Searching for scooter...';
+  static const String cancelRide = 'Cancel Ride';
+  static const String continueRide = 'Continue Ride';
+  static const String scanning = 'Scanning';
+  static const String unlocking = 'Unlocking';
+  static const String rideActive = 'Ride Active';
+  static const String paused = 'Paused';
+  static const String finishing = 'Finishing';
+  static const String ready = 'Ready';
+
+  // Ride Payment
+  static const String noRideData = 'No ride data';
+  static const String rideCompleted = 'Ride Completed!';
+  static const String costBreakdown = 'Cost Breakdown';
+  static const String costPerMinute = 'Cost per minute';
+  static const String rideDuration = 'Ride duration';
+  static const String rideCost = 'Ride cost';
+  static const String serviceFee = 'Service fee (10%)';
+  static const String total = 'Total';
+  static const String creditCard = 'Credit Card';
+  static const String cash = 'Cash';
+  static const String payOnArrival = 'Pay on arrival';
+  static const String confirmPayment = 'Confirm Payment';
+  static const String viewRideHistory = 'View Ride History';
+
+  // Ride History
+  static const String rideHistory = 'Ride History';
+  static const String noRidesYet = 'No rides yet';
+  static const String cancelled = 'Cancelled';
+
+  // QR Unlock
+  static const String scanQrCode = 'Scan QR Code';
+  static const String enterCodeManually = 'Enter code manually';
+  static const String unlockingScooter = 'Unlocking scooter...';
+  static const String scooterUnlocked = 'Scooter Unlocked!';
+  static const String enterScooterCode = 'Enter Scooter Code';
+  static const String unlock = 'Unlock';
+
+  // Scooter Finder
+  static const String viewScooter = 'View Scooter';
+  static const String ignore = 'Ignore';
+
+  // Home
+  static const String switchLang = 'العربية';
+
+  // Scooter Finder (extra)
+  static const String suggestedScooterNearby = 'Suggested Scooter Nearby';
+
+  // Ride History (extra)
+  static const String scanQrToStart = 'Scan a QR code to start your first ride';
+
+  // Ride Tracking (extra)
+  static const String cancelRideConfirm =
+      'Are you sure you want to cancel this ride?';
+
+  // Ride Payment (extra)
+
+  // Booking (extra)
+  static const String noBikesAvailable = 'No bikes available at this station';
+
+  // Splash
+  static const String tagline = 'Smart Mobility Infrastructure';
+
+  // Rating Labels
+  static const String ratingPoor = 'Poor';
+  static const String ratingFair = 'Fair';
+  static const String ratingGood = 'Good';
+  static const String ratingGreat = 'Great';
+  static const String ratingExcellent = 'Excellent!';
+  static const String tapToRate = 'Tap to rate';
+
+  // Settings
+  static const String langEnglish = 'English';
+  static const String langArabic = 'العربية';
+
+  // Currency
+  static const String currency = 'EGP';
+  static const String currencyAr = 'ج.م';
 }

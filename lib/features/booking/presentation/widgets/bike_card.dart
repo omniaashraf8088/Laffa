@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
-import '../../domain/booking_model.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
+import '../../data/models/booking_model.dart';
 
 /// Card widget that displays a single bike's details for selection.
 class BikeCard extends StatelessWidget {
@@ -62,10 +64,8 @@ class BikeCard extends StatelessWidget {
                 children: [
                   Text(
                     bike.name,
-                    style: AppFonts.style(
+                    style: AppTextStyles.button(
                       isArabic: isArabic,
-                      fontSize: AppFonts.sizeMedium,
-                      fontWeight: AppFonts.semiBold,
                       color: AppColors.text,
                     ),
                   ),
@@ -86,19 +86,16 @@ class BikeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${bike.pricePerMinute.toStringAsFixed(1)} EGP',
-                  style: AppFonts.style(
+                  '${bike.pricePerMinute.toStringAsFixed(1)} ${AppStringsEn.currency}',
+                  style: AppTextStyles.sectionTitle(
                     isArabic: isArabic,
-                    fontSize: AppFonts.sizeMedium,
-                    fontWeight: AppFonts.bold,
                     color: AppColors.primary,
                   ),
                 ),
                 Text(
-                  '/min',
-                  style: AppFonts.style(
+                  '/${isArabic ? AppStringsAr.perMin : AppStringsEn.perMin}',
+                  style: AppTextStyles.bodySmall(
                     isArabic: isArabic,
-                    fontSize: AppFonts.sizeSmall,
                     color: AppColors.textTertiary,
                   ),
                 ),
@@ -160,10 +157,8 @@ class BikeCard extends StatelessWidget {
       ),
       child: Text(
         bike.displayType,
-        style: AppFonts.style(
+        style: AppTextStyles.captionMedium(
           isArabic: isArabic,
-          fontSize: AppFonts.sizeXSmall,
-          fontWeight: AppFonts.medium,
           color: AppColors.accent,
         ),
       ),
@@ -196,12 +191,7 @@ class BikeCard extends StatelessWidget {
         const SizedBox(width: 2),
         Text(
           '$percent%',
-          style: AppFonts.style(
-            isArabic: isArabic,
-            fontSize: AppFonts.sizeXSmall,
-            fontWeight: AppFonts.medium,
-            color: color,
-          ),
+          style: AppTextStyles.captionMedium(isArabic: isArabic, color: color),
         ),
       ],
     );

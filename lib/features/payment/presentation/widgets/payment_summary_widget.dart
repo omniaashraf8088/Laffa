@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Widget that displays the payment amount summary.
 class PaymentSummaryWidget extends StatelessWidget {
@@ -12,7 +14,7 @@ class PaymentSummaryWidget extends StatelessWidget {
   const PaymentSummaryWidget({
     super.key,
     required this.amount,
-    this.currency = 'EGP',
+    this.currency = AppStringsEn.currency,
     required this.isArabic,
   });
 
@@ -38,20 +40,17 @@ class PaymentSummaryWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            isArabic ? 'المبلغ المطلوب' : 'Amount Due',
-            style: AppFonts.style(
+            isArabic ? AppStringsAr.amountDue : AppStringsEn.amountDue,
+            style: AppTextStyles.body(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeBody,
               color: AppColors.white.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             '${amount.toStringAsFixed(1)} $currency',
-            style: AppFonts.style(
+            style: AppTextStyles.hero(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeHero,
-              fontWeight: AppFonts.bold,
               color: AppColors.white,
             ),
           ),
@@ -63,10 +62,11 @@ class PaymentSummaryWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              isArabic ? 'التكلفة المقدرة للرحلة' : 'Estimated ride cost',
-              style: AppFonts.style(
+              isArabic
+                  ? AppStringsAr.estimatedRideCost
+                  : AppStringsEn.estimatedRideCost,
+              style: AppTextStyles.caption(
                 isArabic: isArabic,
-                fontSize: AppFonts.sizeXSmall,
                 color: AppColors.white.withValues(alpha: 0.9),
               ),
             ),

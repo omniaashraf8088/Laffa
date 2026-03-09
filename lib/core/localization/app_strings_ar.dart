@@ -274,4 +274,172 @@ class AppStringsAr {
   // Home Drawer
   static const String welcome = 'مرحبا بك';
   static const String toggleTheme = 'تغيير المظهر';
+
+  // Booking
+  static const String bookingSummary = 'ملخص الحجز';
+  static const String bike = 'الدراجة';
+  static const String type = 'النوع';
+  static const String station = 'المحطة';
+  static const String ratePerMin = 'السعر/دقيقة';
+  static const String estDuration = 'المدة المتوقعة';
+  static const String estimatedCost = 'التكلفة المتوقعة';
+  static const String estRideDuration = 'مدة الرحلة المتوقعة';
+
+  // Trip (additional)
+  static const String yourTrip = 'رحلتك';
+  static const String tripInProgress = 'الرحلة جارية';
+  static const String startStation = 'محطة البداية';
+  static const String endStation = 'محطة النهاية';
+  static const String endingTrip = 'جاري الإنهاء...';
+  static const String endTrip = 'إنهاء الرحلة';
+  static const String unlockingBike = 'جاري فتح الدراجة...';
+  static const String tripCompleted = 'انتهت الرحلة!';
+  static const String thanksForRiding = 'شكراً لاستخدامك Laffa';
+  static const String noTripData = 'لا توجد بيانات رحلة';
+  static const String backToHome = 'العودة للرئيسية';
+  static const String rateThisTrip = 'قيّم الرحلة';
+
+  // Safety Tips (inline)
+  static const String safetyTip1 = 'ارتدِ خوذة الأمان';
+  static const String safetyTip2 = 'احترم قواعد المرور';
+  static const String safetyTip3 = 'استخدم مسارات الدراجات';
+
+  // Payment (additional)
+  static const String payment = 'الدفع';
+  static const String amountDue = 'المبلغ المطلوب';
+  static const String estimatedRideCost = 'التكلفة المقدرة للرحلة';
+  static const String paymentMethod = 'طريقة الدفع';
+  static const String defaultLabel = 'افتراضي';
+  static const String cardNumber = 'رقم البطاقة';
+  static const String expiry = 'تاريخ الانتهاء';
+  static const String cardHolderName = 'اسم حامل البطاقة';
+  static const String asShownOnCard = 'الاسم كما يظهر على البطاقة';
+  static const String processing = 'جاري المعالجة...';
+  static const String payAmount = 'ادفع';
+  static const String paymentSuccessful = 'تم الدفع بنجاح!';
+  static const String canStartTrip = 'يمكنك بدء رحلتك الآن';
+  static const String startTrip = 'ابدأ الرحلة';
+
+  // Auth (additional)
+  static const String tooWeak = 'ضعيفة جداً';
+  static const String weak = 'ضعيفة';
+  static const String medium = 'متوسطة';
+  static const String strong = 'قوية';
+  static const String nameHintAr = 'أحمد محمد';
+  static const String emailHintAr = 'البريد@مثال.com';
+  static const String phoneHintAr = '+966501234567';
+  static const String passwordPlaceholder = '••••••••';
+
+  // Rating (additional)
+  static const String whatMadeYouRate = 'ما سبب تقييمك؟';
+  static const String rateYourTrip = 'تقييم الرحلة';
+  static const String happyToHear = 'سعداء بسماع ذلك!';
+  static const String thanksForFeedback = 'شكراً لتقييمك';
+  static const String sorryExperience = 'نأسف لتجربتك';
+  static const String howWasRide = 'كيف كانت رحلتك؟';
+  static const String submitRating = 'إرسال التقييم';
+  static const String thanksForRating = 'شكراً لتقييمك!';
+  static const String feedbackHelps = 'تقييمك يساعدنا على تحسين الخدمة';
+  static const String addComment = 'أضف تعليقاً (اختياري)';
+
+  // Booking (additional)
+  static const String bookABike = 'حجز دراجة';
+  static const String availableBikes = 'الدراجات المتاحة';
+  static const String confirmBooking = 'تأكيد الحجز';
+  static const String perMin = '/دقيقة';
+  static const String min = 'دقيقة';
+
+  // Onboarding (navigation)
+  // skip, back, next, getStarted already exist above
+
+  // Forgot Password
+  static const String enterEmailForReset =
+      'أدخل بريدك الإلكتروني لاستقبال رابط إعادة تعيين كلمة المرور';
+  static const String backTo = 'العودة إلى ';
+  static const String checkEmailForReset =
+      'تحقق من بريدك الإلكتروني للحصول على تعليمات إعادة التعيين';
+
+  // Ride Tracking
+  static const String time = 'الوقت';
+  static const String resume = 'استمرار';
+  static const String pause = 'إيقاف مؤقت';
+  static const String finishRide = 'إنهاء الرحلة';
+  static const String searchingScooter = 'جاري البحث عن السكوتر...';
+  static const String cancelRide = 'إلغاء الرحلة';
+  static const String continueRide = 'استمرار الرحلة';
+  static const String scanning = 'جاري المسح';
+  static const String unlocking = 'جاري الفتح';
+  static const String rideActive = 'الرحلة جارية';
+  static const String paused = 'متوقفة مؤقتاً';
+  static const String finishing = 'جاري الإنهاء';
+  static const String ready = 'جاهز';
+
+  // Ride Payment
+  static const String noRideData = 'لا توجد بيانات رحلة';
+  static const String rideCompleted = 'انتهت الرحلة!';
+  static const String costBreakdown = 'تفاصيل التكلفة';
+  static const String costPerMinute = 'السعر لكل دقيقة';
+  static const String rideDuration = 'مدة الرحلة';
+  static const String rideCost = 'تكلفة الركوب';
+  static const String serviceFee = 'رسوم الخدمة (10%)';
+  static const String total = 'الإجمالي';
+  static const String creditCard = 'بطاقة ائتمان';
+  static const String cash = 'نقداً';
+  static const String payOnArrival = 'الدفع عند الوصول';
+  static const String confirmPayment = 'تأكيد الدفع';
+  static const String viewRideHistory = 'سجل الرحلات';
+
+  // Ride History
+  static const String rideHistory = 'سجل الرحلات';
+  static const String noRidesYet = 'لا توجد رحلات بعد';
+  static const String cancelled = 'ملغية';
+
+  // QR Unlock
+  static const String scanQrCode = 'مسح رمز QR';
+  static const String enterCodeManually = 'إدخال الرمز يدوياً';
+  static const String unlockingScooter = 'جاري فتح السكوتر...';
+  static const String scooterUnlocked = 'تم فتح السكوتر!';
+  static const String enterScooterCode = 'أدخل رمز السكوتر';
+  static const String unlock = 'فتح';
+
+  // Scooter Finder
+  static const String viewScooter = 'عرض السكوتر';
+  static const String ignore = 'تجاهل';
+
+  // Home
+  static const String switchLang = 'English';
+
+  // Scooter Finder (extra)
+  static const String suggestedScooterNearby = 'سكوتر مقترح بالقرب منك';
+
+  // Ride History (extra)
+  static const String scanQrToStart = 'امسح رمز QR لبدء رحلتك الأولى';
+
+  // Ride Tracking (extra)
+  static const String cancelRideConfirm =
+      'هل أنت متأكد أنك تريد إلغاء هذه الرحلة؟';
+
+  // Ride Payment (extra)
+
+  // Booking (extra)
+  static const String noBikesAvailable = 'لا توجد دراجات متاحة حالياً';
+
+  // Splash
+  static const String tagline = 'بنية تحتية للتنقل الذكي';
+
+  // Rating Labels
+  static const String ratingPoor = 'سيئة';
+  static const String ratingFair = 'مقبولة';
+  static const String ratingGood = 'جيدة';
+  static const String ratingGreat = 'ممتازة';
+  static const String ratingExcellent = 'رائعة!';
+  static const String tapToRate = 'اضغط لتقييم';
+
+  // Settings
+  static const String langEnglish = 'English';
+  static const String langArabic = 'العربية';
+
+  // Currency
+  static const String currency = 'EGP';
+  static const String currencyAr = 'ج.م';
 }

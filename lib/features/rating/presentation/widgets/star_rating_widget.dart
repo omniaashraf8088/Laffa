@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Interactive star rating widget.
 /// Users tap or drag to select 1-5 stars.
@@ -54,10 +56,8 @@ class StarRatingWidget extends StatelessWidget {
           child: Text(
             _getRatingLabel(rating, isArabic),
             key: ValueKey(rating),
-            style: AppFonts.style(
+            style: AppTextStyles.button(
               isArabic: isArabic,
-              fontSize: AppFonts.sizeMedium,
-              fontWeight: AppFonts.semiBold,
               color: rating > 0 ? AppColors.primary : AppColors.textTertiary,
             ),
           ),
@@ -71,33 +71,33 @@ class StarRatingWidget extends StatelessWidget {
     if (isArabic) {
       switch (stars) {
         case 1:
-          return 'سيئة';
+          return AppStringsAr.ratingPoor;
         case 2:
-          return 'مقبولة';
+          return AppStringsAr.ratingFair;
         case 3:
-          return 'جيدة';
+          return AppStringsAr.ratingGood;
         case 4:
-          return 'ممتازة';
+          return AppStringsAr.ratingGreat;
         case 5:
-          return 'رائعة!';
+          return AppStringsAr.ratingExcellent;
         default:
-          return 'اضغط لتقييم';
+          return AppStringsAr.tapToRate;
       }
     }
 
     switch (stars) {
       case 1:
-        return 'Poor';
+        return AppStringsEn.ratingPoor;
       case 2:
-        return 'Fair';
+        return AppStringsEn.ratingFair;
       case 3:
-        return 'Good';
+        return AppStringsEn.ratingGood;
       case 4:
-        return 'Great';
+        return AppStringsEn.ratingGreat;
       case 5:
-        return 'Excellent!';
+        return AppStringsEn.ratingExcellent;
       default:
-        return 'Tap to rate';
+        return AppStringsEn.tapToRate;
     }
   }
 }

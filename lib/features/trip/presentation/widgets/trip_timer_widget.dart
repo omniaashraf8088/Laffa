@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/fonts.dart';
+import '../../../../core/localization/app_strings_ar.dart';
+import '../../../../core/localization/app_strings_en.dart';
 
 /// Widget that displays a live timer for the current trip.
 /// Uses a Stream to update every second.
@@ -48,7 +50,9 @@ class TripTimerWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                isArabic ? 'مدة الرحلة' : 'Trip Duration',
+                isArabic
+                    ? AppStringsAr.tripDuration
+                    : AppStringsEn.tripDuration,
                 style: AppFonts.style(
                   isArabic: isArabic,
                   fontSize: isLarge ? AppFonts.sizeBody : AppFonts.sizeSmall,
